@@ -1,13 +1,13 @@
 {
-    "name": "song-lister",
+    "name": "express-template",
     "version": "1.0.0",
-    "description": "Program that integrates with Spotify and Twitter to get and post songs chosen by the user.",
+    "description": "Repository that has an working Express template",
     "main": "app.js",
     "scripts": {
         "heroku-postbuild": "npm run install-server",
         "install-server": "npm install",
         "debug": "nodemon app.js --exec \"npm run lint && node\"",
-        "lint": "node_modules/.bin/eslint **/*.js"
+        "lint": "eslint **/*.js"
     },
     "author": "Alejo Kim Uy",
     "license": "ISC",
