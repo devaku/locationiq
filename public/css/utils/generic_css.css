@@ -1,0 +1,53 @@
+/* GENERIC CSS SHARED BY ALL WEBVIEWS */
+
+/* Layouts */
+
+.row-space {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+}
+
+.row-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.column-space {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+.column-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/* Elements */
+
+.element-full {
+    width: 100%;
+}
+
+/* Text Formatting */
+
+.text-bold {
+    font-weight: bolder;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* Utilites */
+
+.hidden {
+    display: none;
+}

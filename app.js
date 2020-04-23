@@ -23,7 +23,7 @@ app.use(express.static('public'));
 //Parse incoming JSON
 app.use(
     express.urlencoded({
-        extended: true
+        extended: true,
     })
 );
 
@@ -33,7 +33,7 @@ routes(app);
 //Set ejs as view engine
 app.set('view engine', 'ejs');
 app.set('view options', {
-    delimiter: '?'
+    delimiter: '?',
 });
 
 app.set('port', PORT);
