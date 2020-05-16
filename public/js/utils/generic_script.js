@@ -29,6 +29,7 @@ function CloseWebview(isFacebook = false) {
     } catch (err) {}
 }
 
+// Display Close Message for VIBER
 function DisplayCloseMessage() {
     // Hide the main view
     let mainView = document.querySelector('#main-view');
@@ -39,4 +40,42 @@ function DisplayCloseMessage() {
     // Viber webview does not close
     let closeView = document.querySelector('#z-close-view');
     closeView.classList.remove('hidden');
+}
+
+// =======================
+// DISPLAY SWEET ALERTS
+// =======================
+function DisplaySweetAlertInfo(message) {
+    Swal.fire({
+        icon: 'info',
+        title: 'Information',
+        text: message,
+        confirmButtonText: 'OK',
+    });
+}
+
+// Display message using SweetAlert
+function DisplaySweetAlertError(error) {
+    Swal.fire({
+        title: 'Error',
+        text: error,
+        icon: 'error',
+        confirmButtonText: 'OK',
+    });
+}
+
+// =======================
+// DISPLAY LOADING ICON
+// =======================
+
+function LoadingView(isLoading) {
+    if (isLoading) {
+        // Show loading
+        document.querySelector('.zloading-button').classList.add('hidden');
+        document.querySelector('#loading-view').classList.remove('hidden');
+    } else {
+        // No longer loading
+        document.querySelector('.zloading-button').classList.remove('hidden');
+        document.querySelector('#loading-view').classList.add('hidden');
+    }
 }
