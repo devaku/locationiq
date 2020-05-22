@@ -8,6 +8,7 @@
         "install-server": "npm install",
         "debug": "nodemon app.js --exec \"npm run lint && node\"",
         "debug-nolint": "nodemon app.js",
+        "quick-start": "nodemon test.js",
         "lint": "eslint **/*.js"
     },
     "author": "Alejo Kim Uy",
