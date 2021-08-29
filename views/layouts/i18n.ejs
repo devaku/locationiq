@@ -1,0 +1,37 @@
+<!-- i18n Langauge Scripts -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="/js/i18n/CLDRPluralRuleParser.js"></script>
+<script src="/js/i18n/jquery.i18n.js"></script>
+<script src="/js/i18n/jquery.i18n.messagestore.js"></script>
+<script src="/js/i18n/jquery.i18n.fallbacks.js"></script>
+<script src="/js/i18n/jquery.i18n.language.js"></script>
+<script src="/js/i18n/jquery.i18n.parser.js"></script>
+<script src="/js/i18n/jquery.i18n.emitter.js"></script>
+<script src="/js/i18n/jquery.i18n.emitter.bidi.js"></script>
+<script>
+    // =======================
+    // TRANSLATIONS RELATED
+    // =======================
+    jquery351 = jQuery.noConflict(true);
+
+    function ReloadTranslation() {
+        let lang = document.documentElement.lang;
+        // console.log('jquery351: ', jquery351.fn.jquery);
+        // console.log('LANGUAGE: ', lang);
+        jquery351(function ($) {
+            $.i18n({
+                locale: lang,
+            })
+                .load({
+                    en: `https://${window.location.hostname}/js/i18n/languages/en.json`,
+                    th: `https://${window.location.hostname}/js/i18n/languages/th.json`,
+                })
+                .done(function () {
+                    // console.log('Translating everything to: ', lang);
+                    // console.log($('html'));
+                    $('html').i18n();
+                });
+        });
+    }
+</script>

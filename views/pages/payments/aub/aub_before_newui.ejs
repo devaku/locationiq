@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="<?= language ?>">
+    <head>
+        <?- include('../../../layouts/header', {title: title}); ?>
+
+        <!-- Page CSS -->
+        <link rel="stylesheet" href="/css/payments/aub.css" />
+        <!-- UI Transaction -->
+        <link
+            rel="stylesheet"
+            href="/css/payments/templates/uitransaction.css"
+        />
+    </head>
+    <body>
+        <code class="hidden">
+            <input
+                id="ejs-var-orderID"
+                type="hidden"
+                name="orderID"
+                value="<?= orderID ?>"
+            />
+        </code>
+        <div id="main-view" class="">
+            <div class="container">
+                <?- include('../utils/uitransaction', {uiName: name, uiEmail: email, uiLanguage: language, uiCurrency: currency, uiAmount: amount, uiPaymentLogo: paymentLogo, 
+                    uiPaymentText: paymentText, uiStyle}); ?>
+                <hr style="margin-top: 20px" />
+                <div
+                    id="select-payment-view"
+                    class="column-center zloading-button"
+                    style="margin: 0"
+                >
+                    <div class="col-md-12" id="online-payments-view">
+                        <div class="field-group">
+                            <label
+                                data-i18n="label_SelectPaymentMethod"
+                                class="small"
+                                style="--bgcolor: #ffffff"
+                            >
+                                Select Payment Method
+                            </label>
+
+                            <div
+                                class="row-flex-start border-frame payment-icon-layout"
+                                style="
+                                    height: 100%;
+                                    --bgcolor: <?= uiStyle.bgcolor ?>;
+                                "
+                            >
+                                <? if(paymentOptions.PAYMENT_OPTIONS_WEB) { ?>
+                                <? paymentOptions.PAYMENT_OPTIONS_WEB.forEach(function(currentOption){ ?>
+
+                                <!-- Comment this out later -->
+                                <? if(!currentOption.service.includes('instapay')) { ?>
+                                <button
+                                    class="payment-button btnSubmitPaymentSelection"
+                                >
+                                    <img
+                                        class="payment-icon"
+                                        src="<?= currentOption.logo_url ?> "
+                                        alt="<?= currentOption.text ?>"
+                                        style="margin: 0"
+                                        srcset=""
+                                    />
+
+                                    <input
+                                        type="hidden"
+                                        name="payment-channel"
+                                        value="<?= currentOption.service ?>"
+                                    />
+                                </button>
+                                <? } ?>
+
+                                <? })} ?>
+                                <? if(paymentOptions.PAYMENT_OPTIONS_QR) { ?>
+                                <? paymentOptions.PAYMENT_OPTIONS_QR.forEach(function(currentOption){ ?>
+                                <button
+                                    class="payment-button btnSubmitPaymentSelection"
+                                >
+                                    <img
+                                        class="payment-icon"
+                                        src="<?= currentOption.logo_url ?> "
+                                        alt="<?= currentOption.text ?>"
+                                        style="margin: 0"
+                                        srcset=""
+                                    />
+
+                                    <input
+                                        type="hidden"
+                                        name="payment-channel"
+                                        value="<?= currentOption.service ?>"
+                                    />
+                                </button>
+                                <? })} ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Display the text information -->
+                <div
+                    id="text-information-view"
+                    class="column-center hidden"
+                    style="margin-bottom: 10px"
+                >
+                    <p
+                        id="selected-channel-text"
+                        style="text-align: center; font-weight: 500"
+                        class="hidden"
+                    ></p>
+                    <img
+                        id="selected-channel-img"
+                        class="payment-display-icon"
+                        src=""
+                        alt=""
+                        srcset=""
+                    />
+                    <!-- Beneficiary Bank -->
+                    <div class="col-md-12">
+                        <div class="field-group">
+                            <label
+                                data-i18n="label_BeneficiaryBank"
+                                class="small"
+                                style="--bgcolor: #ffffff"
+                            >
+                                Beneficiary Bank
+                            </label>
+                            <p
+                                class="border-frame"
+                                style="--bgcolor: <?= uiStyle.bgcolor ?>"
+                            >
+                                Asia United Bank
+                            </p>
+                        </div>
+                    </div>
+                    <!-- InvoiceID -->
+                    <div class="col-md-12">
+                        <div class="field-group">
+                            <label
+                                data-i18n="label_AccountNumber"
+                                class="small"
+                                style="--bgcolor: #ffffff"
+                            >
+                                Account Number
+                            </label>
+                            <p
+                                class="border-frame"
+                                style="--bgcolor: <?= uiStyle.bgcolor ?>"
+                                id="text-information-invoiceid"
+                            ></p>
+                        </div>
+                    </div>
+                    <!-- Expiration Date -->
+                    <div class="col-md-12" style="display: hidden">
+                        <div class="field-group">
+                            <label
+                                data-i18n="label_PayBefore"
+                                class="small"
+                                style="
+                                    font-weight: 800;
+                                    color: red;
+                                    --bgcolor: #ffffff;
+                                "
+                            >
+                                Pay Before
+                            </label>
+                            <p
+                                class="border-frame"
+                                style="--bgcolor: <?= uiStyle.bgcolor ?>"
+                                id="text-information-expirationdate"
+                            ></p>
+                        </div>
+                    </div>
+                    <!-- Instructions -->
+                    <div class="col-md-12">
+                        <div class="field-group">
+                            <label
+                                data-i18n="label_Instructions"
+                                class="small"
+                                style="--bgcolor: #ffffff"
+                            >
+                                Instructions
+                            </label>
+                            <p
+                                class="border-frame"
+                                style="--bgcolor: <?= uiStyle.bgcolor ?>"
+                            >
+                                <span data-i18n="text_InstaPayInstructions1">
+                                    When doing bank transfers/Instapay payments,
+                                    please access your bank's app/online banking
+                                    and:
+                                </span>
+                                <br /><br />
+                                <span data-i18n="text_InstaPayInstructions2">
+                                    1. Select Asia United Bank as beneficiary
+                                    bank </span
+                                ><br />
+                                <span data-i18n="text_InstaPayInstructions3">
+                                    2. Input store name as account name </span
+                                ><br />
+                                <span data-i18n="text_InstaPayInstructions4">
+                                    3. Input the 16-digit acct number as acct
+                                    number</span
+                                ><br />
+                                <span data-i18n="text_InstaPayInstructions5">
+                                    Enter the amount due</span
+                                ><br />
+                                <strong>
+                                    5.
+                                    <span
+                                        data-i18n="text_InstaPayInstructions6"
+                                    >
+                                        Complete your payment transaction within
+                                        15 minutes.</span
+                                    ></strong
+                                >
+                                <br />
+                                <strong>
+                                    6.
+                                    <span
+                                        data-i18n="text_InstaPayInstructions7"
+                                    >
+                                        Do NOT close this page while doing your
+                                        payment process.</span
+                                    >
+                                </strong>
+                                <br /><br />
+                                <strong>
+                                    <span
+                                        data-i18n="text_InstaPayInstructionsFooter1"
+                                    >
+                                        ***Pay on or before the expiration date
+                                        of the 16-digit acct</span
+                                    ><br />
+                                    <span
+                                        data-i18n="text_InstaPayInstructionsFooter2"
+                                    >
+                                        ***Instapay charges apply</span
+                                    ><br />
+                                </strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Display the QR Code -->
+                <div id="qr-payment-view" class="column-center hidden">
+                    <!-- <p style="text-align: center; font-weight: 500">
+                        Please close webview once transaction has been settled
+                    </p> -->
+                    <p
+                        id="selected-qr-channel-text"
+                        style="text-align: center; font-weight: 500"
+                        class="hidden"
+                    ></p>
+                    <img
+                        id="selected-qr-channel-img"
+                        class="payment-display-icon"
+                        src=""
+                        alt=""
+                        srcset=""
+                    />
+
+                    <img class="rounded" id="qrcode_img" alt="QR Code Image" />
+                    <small
+                        data-i18n="text_QRCodeInformation"
+                        class="form-text text-muted"
+                        id="qrcodeHelp"
+                    >
+                        Scan the above QR Code to pay for your order
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading animation -->
+        <?- include('../../../layouts/loading_view') ?>
+
+        <!-- This is only used by VIBER -->
+        <?- include('../../../layouts/z_close_view') ?>
+
+        <?- include('../../../layouts/footer_scripts') ?>
+
+        <!-- Self Scripts -->
+        <script src="/js/utils/generic_script.js"></script>
+        <script src="/js/payments/creditformtemplate.js"></script>
+        <script src="/js/payments/aub.js"></script>
+    </body>
+</html>

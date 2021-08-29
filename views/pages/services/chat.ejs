@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="<?= language ?>">
+    <head>
+        <?- include('../../layouts/header', {title: title}); ?>
+
+        <!-- Page CSS -->
+        <link rel="stylesheet" href="/css/services/chat.css" />
+    </head>
+    <body>
+        <div id="main-view">
+            <code class="hidden">
+                <div id="ejs-var-chat-timer">
+                    <?= chatTimer ?>
+                </div>
+            </code>
+            <?- include('../../layouts/sweet_text'); ?>
+            <div class="container">
+                <!-- Scrollable chat window -->
+                <div id="chat-messages" class="chat-window column-center">
+                    <? if (!history){ ?>
+                    <!-- No chat history yet -->
+                    <div
+                        class="chat-bubble var-chat-bubble-style-sender column-space animate__animated animate__fadeInDown"
+                        style="
+                            --sender_textcolor: <?= style.sender_textcolor ?>;
+                            --sender_bgcolor: <?= style.sender_bgcolor ?>;
+                        "
+                    >
+                        <div class="element-full-width align-center">
+                            <p>
+                                <span
+                                    data-i18n="text_BOTTYMessage"
+                                    class="text-bold"
+                                >
+                                    BOTTY GENERATED MESSAGE
+                                </span>
+                            </p>
+                        </div>
+                        <div class="element-full-width align-center">
+                            <p data-i18n="text_MessageToAdmins">
+                                Send a message to the admins!
+                            </p>
+                        </div>
+                    </div>
+                    <?} else { ?>
+                    <? history.forEach(function(currentChatBubble, index){ ?>
+
+                    <? if(currentChatBubble.sender_name){ ?>
+                    <!--
+                        class="chat-bubble var-chat-bubble-style-receiver column-space animate__animated animate__fadeInLeft" 
+                    -->
+                    <div
+                        class="chat-bubble var-chat-bubble-style-receiver animate__animated animate__fadeInLeft"
+                        style="
+                            --other_textcolor: <?= style.other_textcolor ?>;
+                            --other_bgcolor: <?= style.other_bgcolor ?>;
+                        "
+                    >
+                        <div class="element-full-width align-left">
+                            <p>
+                                <span class="text-bold"
+                                    ><?= currentChatBubble.sender_name ?></span
+                                >
+                                <span class="text-italic chat_timestamp">
+                                    <?= currentChatBubble.time_stamp ?>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="element-full-width align-left">
+                            <p>
+                                <?= currentChatBubble.chat_msg.replace(/[\\]+/g, '');?>
+                            </p>
+                        </div>
+                    </div>
+                    <? } else { ?>
+                    <div
+                        class="chat-bubble var-chat-bubble-style-sender animate__animated animate__fadeInRight"
+                        style="
+                            --sender_textcolor: <?= style.sender_textcolor ?>;
+                            --sender_bgcolor: <?= style.sender_bgcolor ?>;
+                        "
+                    >
+                        <div class="element-full-width align-right">
+                            <p>
+                                <span class="text-italic chat_timestamp">
+                                    <?= currentChatBubble.time_stamp ?>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="element-full-width align-right">
+                            <p>
+                                <?= currentChatBubble.chat_msg.replace(/[\\]+/g, '');?>
+                            </p>
+                        </div>
+                    </div>
+                    <? } ?>
+
+                    <? }) ?>
+                    <? } ?>
+                </div>
+                <!-- Textarea to submit messages -->
+                <div
+                    class="btn-block lower-chatbox row-space var-chat-bubble-style-sender animate__animated animate__fadeIn"
+                    style="
+                        --sender_textcolor: <?= style.sender_textcolor ?>;
+                        --sender_bgcolor: <?= style.sender_bgcolor ?>;
+                        border-top: 1px solid darkgray;
+                        height: 60px;
+                    "
+                >
+                    <textarea
+                        rows="1"
+                        name="messageText"
+                        id="messageText"
+                        cols="23"
+                        maxlength="100"
+                        required
+                        placeholder="Type your message here..."
+                    ></textarea>
+                    <div class="column-center">
+                        <button
+                            class="var-chat-button chat-button"
+                            style="
+                                --button_textcolor: <?= style.button_textcolor
+                                    ?>;
+                                --button_bgcolor: <?= style.button_bgcolor ?>;
+                            "
+                            id="send-button"
+                        >
+                            <span data-i18n="btn_Submit" class="text-bold">
+                                SUBMIT
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- This is only used by VIBER -->
+        <?- include('../../layouts/z_close_view') ?>
+
+        <?- include('../../layouts/footer_scripts') ?>
+
+        <!--Time conversion-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+        <!-- Self Scripts -->
+        <script src="/js/services/chat.js"></script>
+    </body>
+</html>

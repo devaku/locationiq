@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="<?= language ?>">
+    <head>
+        <?- include('../../layouts/header', {title: title}); ?>
+
+        <!-- Page CSS -->
+        <link rel="stylesheet" href="/css/services/map_address.css" />
+    </head>
+    <body>
+        <div id="main-view">
+            <div id="map"></div>
+            <div class="bottom-box-container row-center">
+                <input
+                    type="hidden"
+                    id="input-lat-reference"
+                    name=""
+                    value="<?= referenceLat ?>"
+                />
+                <input
+                    type="hidden"
+                    id="input-long-reference"
+                    name=""
+                    value="<?= referenceLong ?>"
+                />
+                <input
+                    type="hidden"
+                    id="input-branch"
+                    name=""
+                    value="<?= branch ?>"
+                />
+                <button
+                    data-i18n="btn_OrderHere"
+                    type="button"
+                    class="btn btn-primary element-full"
+                    style="
+                        font-size: larger;
+                        font-weight: bold;
+                        border: 0;
+                        height: 50px;
+                        position: fixed;
+                        bottom: 50px;
+                        z-index: 10;
+                    "
+                    value="ORDER HERE"
+                    id="btn-submit"
+                >
+                    Order Here
+                </button>
+            </div>
+        </div>
+        <?- include('../../layouts/z_close_view') ?>
+        <?- include('../../layouts/footer_scripts') ?>
+
+        <!-- Self Scripts -->
+        <script src="/js/services/map_reference.js"></script>
+
+        <!-- Google Maps Script -->
+        <script
+            src="https://maps.googleapis.com/maps/api/js?key=<?= apikey ?>&libraries=places&callback=initAutocomplete"
+            async
+            defer
+        ></script>
+    </body>
+</html>

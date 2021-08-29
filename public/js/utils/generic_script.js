@@ -1,3 +1,10 @@
+liff.init(
+    (data) => {
+        const userId = data.context.userId;
+    },
+    (err) => {}
+);
+
 // Get the query string from the URL
 function GetQueryObject() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -15,6 +22,7 @@ function CloseWebview(isFacebook = false) {
     try {
         // If facebook, just redirect to the close page
         if (isFacebook) {
+            console.log('CLOSING FACEBOOK WINDOW');
             location.href = window.location.origin + '/webpages/closing.html';
         } else {
             // For Viber
@@ -43,8 +51,36 @@ function DisplayCloseMessage() {
 }
 
 // =======================
+// DISPLAY ELEMENTS
+// =======================
+
+function ShowHiddenElement(selector) {
+    document.querySelector(selector).classList.remove('hidden');
+}
+
+function HideHiddenElement(selector) {
+    document.querySelector(selector).classList.add('hidden');
+}
+
+// =======================
+// DISPLAY MODALS
+// =======================
+
+function DisplayModal(id) {
+    $(id).modal({
+        keyboard: false,
+        backdrop: 'static',
+    });
+}
+
+function CloseModal(id) {
+    $(id).modal('hide');
+}
+
+// =======================
 // DISPLAY SWEET ALERTS
 // =======================
+
 function DisplaySweetAlertInfo(message) {
     Swal.fire({
         icon: 'info',
@@ -57,9 +93,9 @@ function DisplaySweetAlertInfo(message) {
 // Display message using SweetAlert
 function DisplaySweetAlertError(error) {
     Swal.fire({
-        title: 'Error',
+        title: 'Oops... &#128563;',
         text: error,
-        icon: 'error',
+        iconHtml: '&#128563;',
         confirmButtonText: 'OK',
     });
 }

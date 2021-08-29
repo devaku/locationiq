@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="<?= language ?>">
+    <head>
+        <?- include('../../layouts/header', {title: title}); ?>
+
+        <!-- Page CSS -->
+        <link rel="stylesheet" href="/css/services/weborder.css" />
+    </head>
+    <body>
+        <?- include('../../layouts/sweet_text'); ?>
+        <code class="hidden">
+            <div id="ejs-var-navtabs">
+                <?= JSON.stringify(navigation) ?>
+            </div>
+            <div id="ejs-var-navstyle">
+                <?= JSON.stringify(navstyle) ?>
+            </div>
+            <input
+                type="hidden"
+                id="ejs-var-page-mode"
+                name=""
+                value="<?= mode ?>"
+            />
+            <input
+                type="hidden"
+                id="ejs-var-baseurl"
+                name=""
+                value="<?= baseurl ?>"
+            />
+
+            <? if (ruleset_reward) { ?>
+            <input
+                type="hidden"
+                id="ejs-var-reward-max"
+                name=""
+                value="<?= ruleset_reward.max ?>"
+            />
+            <input
+                type="hidden"
+                id="ejs-var-reward-min"
+                name=""
+                value="<?= ruleset_reward.min ?>"
+            />
+            <input
+                type="hidden"
+                id="ejs-var-reward-count"
+                name=""
+                value="<?= ruleset_reward.count ?>"
+            />
+            <? } ?>
+        </code>
+        <div id="main-view" style="overflow-y: hidden" class="">
+            <div class="container zloading-button">
+                <!-- TOP AREA -->
+                <!-- Search Box, Navigation Area, and Message Area -->
+                <div id="top-section" class="column-center">
+                    <!-- Navigation area -->
+                    <!-- row-left-align -->
+                    <!-- Kasi order lang dapat ang may navigation either way -->
+                    <? if (mode === 'order') {?>
+                    <div id="navigation-area" class="hidden element-full"></div>
+                    <? }?>
+                </div>
+                <div class="lower-section">
+                    <div id="message-area">
+                        <?- messages ?>
+                    </div>
+                    <!-- MIDDLE AREA -->
+                    <!-- Cards box -->
+                    <div id="card-area" class="bot-cards-spaces">
+                        <?- cards ?>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal for SEARCH -->
+            <!-- <div
+                class="modal fade"
+                id="modalSearch"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">
+                                Search
+                            </h5>
+                            <button
+                                type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                            >
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body"></div>
+                        <!-- <div class="modal-footer">
+                            <button
+                                type="button"
+                                class="btn ejs-var-style-card-button"
+                                data-dismiss="modal"
+                                onclick="TextSearch(this)"
+                            >
+                                Search
+                            </button>
+                        </div> -->
+            <!-- </div>
+                </div>
+            </div> -->
+
+            <!-- BOTTOM AREA -->
+            <!-- Button footer -->
+            <div id="footer-area">
+                <? if (mode === 'rewards') {?>
+                <button
+                    data-i18n="btn_Confirm"
+                    class="footer-bar button-rewards element-full ejs-var-style-card-button"
+                    style="
+                        font-size: larger;
+                        font-weight: bold;
+                        border: none;
+                        z-index: 10;
+                    "
+                    value="<?= promoID ?>"
+                    onclick="ButtonCommandRewards(this)"
+                >
+                    Confirm
+                </button>
+                <? }?>
+                <div
+                    id="search-area"
+                    class="row-space <?= mode === 'rewards' ? 'hidden' : 'hidden'?>"
+                    style="padding-left: 5px; position: relative; bottom: 40px"
+                >
+                    <input
+                        class="search-textbox"
+                        type="text"
+                        name=""
+                        placeholder="Search for products here!"
+                        id=""
+                    />
+                    <div class="search-icon">
+                        <button
+                            class="search-button img-button"
+                            data-dismiss="modal"
+                            onclick="TextSearch(this)"
+                        >
+                            <img
+                                class="search-img"
+                                src="/assets/search.png"
+                                alt="Search!"
+                            />
+                        </button>
+                    </div>
+                </div>
+                <div
+                    class="<?= mode === 'rewards' ? 'hidden' : '' ?> footer-bar row-space ejs-var-style-footer"
+                >
+                    <?- footer ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading animation -->
+        <?- include('../../layouts/loading_view') ?>
+
+        <!-- This is only used by VIBER -->
+        <?- include('../../layouts/z_close_view') ?>
+
+        <?- include('../../layouts/footer_scripts') ?>
+
+        <!-- Self Scripts -->
+        <script src="/js/services/weborder.js"></script>
+    </body>
+</html>

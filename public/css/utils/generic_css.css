@@ -30,10 +30,21 @@
     flex-direction: column;
 }
 
+.column-flex-start {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+}
+
 /* Elements */
 
 .element-full {
     width: 100%;
+}
+
+.element-tall {
+    height: 100%;
 }
 
 /* Text Formatting */
@@ -50,6 +61,13 @@
     text-align: center;
 }
 
+/*
+.text-justify {
+    text-align: justify;
+    text-justify: inter-character;
+}
+*/
+
 /* Utilites */
 
 .hidden {
@@ -59,9 +77,9 @@
 /* Loading animation */
 
 .loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #025497;
-    border-bottom: 16px solid #025497;
+    border: 16px solid #f5f5f5;
+    border-top: 16px solid #d3d3d3;
+    border-bottom: 16px solid #d3d3d3;
     border-radius: 75%;
     width: 60px;
     height: 60px;
@@ -76,4 +94,21 @@
     100% {
         transform: rotate(360deg);
     }
+}
+
+.ejs-var-card-style {
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    background-color: var(--bgcolor);
+    color: var(--textcolor);
+    box-shadow: 3px 3px 5px 6px gray;
+}
+
+hr {
+    width: 100%;
+    border-color: darkgrey;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

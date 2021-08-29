@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="<?= language ?>">
+    <head>
+        <?- include('../../layouts/header', {title: title}); ?>
+
+        <!-- Page CSS -->
+        <link
+            rel="stylesheet"
+            href="/css/services/receipt_breakdown_checkout.css"
+        />
+        <link rel="stylesheet" href="/css/services/receipt_table.css" />
+    </head>
+    <body
+        class="var-body"
+        style="
+            --textcolor: <?= receiptJson.textcolor?>;
+            --bgcolor: <?= receiptJson.bgcolor?>;
+        "
+    >
+        <div id="main-view">
+            <?- include('../../layouts/sweet_text'); ?>
+            <!-- Top Header -->
+            <div class="column-center">
+                <div class="column-center">
+                    <img
+                        src="<?= receiptJson.logo_url ?>"
+                        alt="<?= receiptJson.merchant ?>"
+                    />
+                </div>
+            </div>
+            <span id="ejs-generated-table" class="hidden"></span>
+            <div id="hider" class="hidden">
+                <span id="ejs-receipt-bottom-footer" class="hidden"></span>
+            </div>
+
+            <!-- Footer -->
+            <div class="container">
+                <? cards.forEach(function (card) {?>
+                <p class="text-center text-bold" style="margin: 0">
+                    <?= card.subtitle?>
+                </p>
+                <div class="button-container column-center">
+                    <? card.button.forEach(function (currentButton) {?>
+                    <button
+                        class="ejs-var-button"
+                        style="
+                            --bgcolor: <?= currentButton.bgcolor ?>;
+                            --textcolor: <?= currentButton.textcolor ?>;
+                        "
+                        value="<?= currentButton.command ?>"
+                    >
+                        <?= currentButton.name ?>
+                    </button>
+                    <? }) ?>
+                </div>
+                <? }) ?>
+            </div>
+        </div>
+
+        <code id="ejs-receipt-json" class="hidden">
+            <?= JSON.stringify(receiptJson) ?>
+        </code>
+
+        <?- include('../../layouts/z_close_view') ?>
+        <?- include('../../layouts/footer_scripts') ?>
+
+        <!-- Self Scripts -->
+        <script src="/js/services/receipt_breakdown_checkout.js"></script>
+        <script src="/js/services/receipt_table.js"></script>
+        <script src="/js/services/receipt_summary.js"></script>
+    </body>
+</html>

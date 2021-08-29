@@ -1,0 +1,28 @@
+.card-input-container {
+    padding: 5px;
+    border: none;
+}
+/* Stripe Element placeholder */
+.sr-card-element {
+    box-sizing: border-box;
+
+    height: 40px;
+
+    padding: 10px 12px;
+
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: white;
+
+    box-shadow: 0 1px 3px 0 #b1b7be;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+}
+
+.input-full {
+    width: 100%;
+}
+
+.input-no-border {
+    border: none;
+}

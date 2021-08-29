@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="<?= language ?>">
+    <head>
+        <?- include('../../../layouts/header', {title: title}); ?>
+
+        <!-- Page CSS -->
+        <link rel="stylesheet" href="/css/payments/firstdata.css" />
+
+        <!-- UI Transaction -->
+        <link
+            rel="stylesheet"
+            href="/css/payments/templates/uitransaction.css"
+        />
+    </head>
+    <body>
+        <div id="main-view" class="container zloading-button">
+            <?- include('../../../layouts/sweet_text'); ?>
+            <?- include('../utils/uitransaction', {uiName: name, uiEmail: email, uiLanguage: language, uiCurrency: currency, uiAmount: amount, uiPaymentLogo: paymentLogo, 
+                uiPaymentText: paymentText, uiStyle}); ?>
+            <hr style="margin-top: 20px" />
+            <!-- FirstData Iframe MADNESS -->
+            <div id="iframe-view" class="column-center">
+                <div
+                    class=""
+                    style="
+                        text-align: left;
+                        width: 100%;
+                        display: flex;
+                        width: 100%;
+                        align-items: flex-start;
+                        padding-left: 5px;
+                    "
+                >
+                    <label
+                        data-i18n="label_CreditCardNumber"
+                        for="tokenform"
+                        style="margin: 0px; padding-left: 10px"
+                    >
+                        Credit Card Number
+                    </label>
+                    <span class="required-asterisk"> *</span>
+                </div>
+                <div
+                    style="
+                        display: flex;
+                        width: 100%;
+                        align-items: flex-start;
+                        justify-content: space-between;
+                        padding-left: 5px;
+                    "
+                >
+                    <!-- position: relative; right: 45px -->
+                    <form
+                        class="iframe-spacing"
+                        name="tokenform"
+                        id="tokenform"
+                    >
+                        <input id="mytoken" type="hidden" name="token" />
+                        <iframe
+                            class=""
+                            id="tokenFrame"
+                            name="tokenFrame"
+                            src="<?= iframeUrl ?>"
+                            frameborder="0"
+                            style="
+                                width: 220px;
+                                height: 60px;
+                                padding: 0px;
+                                margin: 0px;
+                            "
+                            scrolling="no"
+                        ></iframe>
+                    </form>
+                </div>
+            </div>
+            <div
+                id="card-details-view"
+                class="column-flex-start"
+                style="position: relative; bottom: 50px"
+            >
+                <!-- Card Details -->
+                <div class="input-row-left">
+                    <!-- EXPIRATION -->
+                    <div class="col-md">
+                        <div class="field-group" style="margin-right: 5px">
+                            <label
+                                data-i18n="label_Expiration"
+                                class="small"
+                                style="--bgcolor: #ffffff"
+                            >
+                                Expiration
+                            </label>
+                            <span
+                                class="required-asterisk"
+                                style="--bgcolor: #ffffff"
+                            >
+                                *</span
+                            >
+
+                            <div
+                                class="border-frame ui-transaction-p"
+                                style="
+                                    --bgcolor: <?= uiStyle.bgcolor ?>;
+                                    padding: 10px;
+                                "
+                            >
+                                <div class="input-row">
+                                    <select id="card-exp-month">
+                                        <option value="01">January</option>
+                                        <option value="02">February</option>
+                                        <option value="03">March</option>
+                                        <option value="04">April</option>
+                                        <option value="05">May</option>
+                                        <option value="06">June</option>
+                                        <option value="07">July</option>
+                                        <option value="08">August</option>
+                                        <option value="09">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
+                                    </select>
+                                    <input
+                                        class="input-short"
+                                        type="tel"
+                                        name="input-expiration"
+                                        id="card-exp-year"
+                                        maxlength="4"
+                                        placeholder="2020"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="field-group">
+                            <label
+                                data-i18n="label_CVV"
+                                class="small"
+                                style="--bgcolor: #ffffff"
+                            >
+                                CVV
+                            </label>
+                            <span
+                                class="required-asterisk"
+                                style="--bgcolor: #ffffff"
+                            >
+                                *</span
+                            >
+
+                            <input
+                                class="border-frame"
+                                style="
+                                    --bgcolor: <?= uiStyle.bgcolor ?>;
+                                    width: 100%;
+                                    padding-top: 13px;
+                                    padding-bottom: 13px;
+                                "
+                                type="tel"
+                                name="input-cvv"
+                                id="card-cvv"
+                                maxlength="5"
+                                placeholder="CVV"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ADDDRESS -->
+                <div class="col-md">
+                    <div class="field-group">
+                        <label
+                            data-i18n="label_Address"
+                            class="small"
+                            style="--bgcolor: #ffffff"
+                        >
+                            Address
+                        </label>
+                        <input
+                            type="text"
+                            style="--bgcolor: <?= uiStyle.bgcolor ?>"
+                            class="input-full border-frame"
+                            name="input-address"
+                            id="card-address"
+                            placeholder="Your Address Here"
+                        />
+                    </div>
+                </div>
+                <!-- ZIP Code -->
+                <div class="input-row-center">
+                    <div class="col-md">
+                        <div class="field-group">
+                            <label
+                                data-i18n="label_Zip"
+                                class="small"
+                                style="--bgcolor: #ffffff"
+                            >
+                                Zip / Postal Code
+                            </label>
+                            <span
+                                class="required-asterisk"
+                                style="--bgcolor: #ffffff"
+                            >
+                                *</span
+                            >
+
+                            <input
+                                class="input-full border-frame"
+                                style="--bgcolor: <?= uiStyle.bgcolor ?>"
+                                type="tel"
+                                name="input-zip"
+                                id="card-zip"
+                                maxlength="9"
+                                placeholder="1234"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="column-center input-full">
+                    <button
+                        data-i18n="btn_Submit"
+                        class="btn btn-primary input-full text-bold"
+                        type="button"
+                        id="btn-submit"
+                        value="SUBMIT"
+                    >
+                        SUBMIT
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading animation -->
+        <?- include('../../../layouts/loading_view') ?>
+
+        <!-- This is only used by VIBER -->
+        <?- include('../../../layouts/z_close_view') ?>
+
+        <?- include('../../../layouts/footer_scripts') ?>
+
+        <!-- Self Scripts -->
+        <script src="/js/payments/firstdata.js"></script>
+    </body>
+</html>

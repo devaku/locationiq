@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <?- include('../../../layouts/header', {title: title}); ?>
+
+        <!-- Page CSS -->
+        <link rel="stylesheet" href="/css/payments/creditformtemplate.css" />
+        <link rel="stylesheet" href="/css/payments/cybersource.css" />
+    </head>
+    <body>
+        <!-- Credit Form Template -->
+        <?- include('../credit_form_template', {
+            name: name,
+            email: email,
+            amount: amount,
+            currency: currency
+        }) ?>
+
+        <!-- Loading animation -->
+        <?- include('../../../layouts/loading_view') ?>
+
+        <!-- Card Images -->
+        <div class="row-center">
+            <!-- JCB Secure -->
+            <div class="column-center">
+                <img
+                    class="img-size"
+                    src="/assets/card_jcb_secure.gif"
+                    alt="JCB Secure"
+                />
+            </div>
+            <!-- Mastercard -->
+            <div class="column-center">
+                <img
+                    class="img-size"
+                    src="/assets/card_mastercard_secure.gif"
+                    alt="Mastercard Secure"
+                />
+            </div>
+            <!-- Visa -->
+            <div class="column-center">
+                <img
+                    class="img-size"
+                    src="/assets/card_visa_secure.jpg"
+                    alt="Visa Secure"
+                />
+            </div>
+        </div>
+
+        <!-- This is only used by VIBER -->
+        <?- include('../../../layouts/z_close_view') ?>
+
+        <?- include('../../../layouts/footer_scripts') ?>
+
+        <!-- Self Scripts -->
+        <script src="/js/utils/generic_script.js"></script>
+        <script src="/js/payments/creditformtemplate.js"></script>
+        <script src="/js/payments/cybersource.js"></script>
+    </body>
+</html>

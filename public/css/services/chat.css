@@ -1,0 +1,65 @@
+h5,
+p {
+    margin: 0;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.chat-window {
+    height: 100%;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 60px;
+    justify-content: stretch;
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.chat-bubble {
+    width: 100%;
+    align-items: flex-start;
+    margin: 5px 0;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+}
+
+.var-chat-bubble-style-receiver {
+    color: var(--other_textcolor);
+    background-color: var(--other_bgcolor);
+}
+
+.var-chat-bubble-style-sender {
+    color: var(--sender_textcolor);
+    background-color: var(--sender_bgcolor);
+}
+
+.var-chat-button {
+    color: var(--button_textcolor);
+    background-color: var(--button_bgcolor);
+}
+
+.chat-button {
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.lower-chatbox {
+    padding: 0px;
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+}

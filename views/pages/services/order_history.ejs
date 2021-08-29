@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="<?= language ?>">
+    <head>
+        <?- include('../../layouts/header', {title: title}); ?>
+
+        <!-- Page CSS -->
+        <link rel="stylesheet" href="/css/services/order_history.css" />
+        <link rel="stylesheet" href="/css/services/receipt_table.css" />
+    </head>
+    <body
+        class="var-body"
+        style="
+            --bgcolor: <?= receiptJson.bgcolor ?>;
+            --textcolor: <?= receiptJson.textcolor ?>;
+        "
+    >
+        <div id="main-view" class="">
+            <div class="container">
+                <div class="column-center">
+                    <div class="header-container container column-center">
+                        <img
+                            src="<?= receiptJson.logo_url ?>"
+                            alt="<?= receiptJson.merchant ?>"
+                        />
+                        <h2><?= receiptJson.merchant ?></h2>
+                    </div>
+                    <div class="history-container">
+                        <!-- The box entry -->
+                        <? receiptJson.orders.forEach(function(order) { ?>
+                        <div class="order-entry">
+                            <!-- The text at the top -->
+                            <div class="order-details row-space">
+                                <h6><?= order.order_id ?></h6>
+                                <h6><?= order.order_date ?></h6>
+                            </div>
+                            <!-- The details in the middle -->
+                            <div class="order-breakdown">
+                                <h6>
+                                    <span class="text-bold">
+                                        <?= order.order_method?> </span
+                                    >:
+                                    <?= order.branch_name ?>
+                                </h6>
+                                <div
+                                    class="order-list column-center"
+                                    style="align-items: start"
+                                >
+                                    <? order.items.forEach(function(subItem, subtIndex) { ?>
+                                    <h6>
+                                        <span style="visibility: hidden">
+                                            <?= order.order_method?>
+                                            :
+                                        </span>
+                                        <?= subItem ?>
+                                    </h6>
+                                    <? })?>
+                                </div>
+                                <h6>
+                                    <span class="text-bold"> Price </span>:
+                                    <?= order.amount ?>
+                                </h6>
+                            </div>
+                            <!-- Holds the two buttons -->
+                            <div class="button-container row-space">
+                                <button
+                                    data-i18n="btn_View"
+                                    class="var-page-button"
+                                    style="
+                                        --button-color: <?=
+                                            receiptJson.button_bgcolor ?>;
+                                        --button-textcolor: <?=
+                                            receiptJson.button_textcolor ?>;
+                                    "
+                                    value="view"
+                                >
+                                    View
+                                </button>
+                                <!-- <input type="button" value="View" /> -->
+                                <button
+                                    data-i18n="btn_ReOrder"
+                                    class="var-page-button"
+                                    style="
+                                        --button-color: <?=
+                                            receiptJson.button_bgcolor ?>;
+                                        --button-textcolor: <?=
+                                            receiptJson.button_textcolor ?>;
+                                    "
+                                    value="reorder"
+                                >
+                                    Re-Order
+                                </button>
+                                <!-- <input type="button" value="Re-order" /> -->
+
+                                <input
+                                    type="hidden"
+                                    name="sessionid"
+                                    value="<?= order.session_id ?>"
+                                />
+                            </div>
+                        </div>
+                        <? }) ?>
+                    </div>
+                    <span id="ejs-receipt-bottom-footer"></span>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div
+                class="modal fade"
+                id="receipt-modal"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog" role="document">
+                    <div id="modal-content" class="modal-content"></div>
+                </div>
+            </div>
+        </div>
+        <code id="ejs-receipt-json" class="hidden">
+            <?= JSON.stringify(receiptJson) ?>
+        </code>
+        <?- include('../../layouts/z_close_view') ?>
+
+        <?- include('../../layouts/footer_scripts') ?>
+
+        <!-- Self Scripts -->
+        <script src="/js/services/receipt_table.js"></script>
+        <script src="/js/services/order_history.js"></script>
+    </body>
+</html>

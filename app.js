@@ -5,6 +5,9 @@ if (process.env.NODE_ENV === undefined) {
 
 const PORT = process.env.PORT;
 
+// Set the ROOT DIRECTORY
+global.ROOT_DIRECTORY = __dirname;
+
 const express = require('express');
 const morgan = require('morgan');
 

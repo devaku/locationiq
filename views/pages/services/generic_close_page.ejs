@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="<?= language ?>">
+    <head>
+        <?- include('../../layouts/header', {title: title}); ?>
+    </head>
+    <body>
+        <div id="z-close-view" class="">
+            <div class="container">
+                <div class="column-center">
+                    <div class="row-center">
+                        <!-- Style is specific to override any CSS -->
+                        <img
+                            src="/assets/checkmark.svg"
+                            alt="Webview can now be closed"
+                            srcset="/assets/checkmark.svg"
+                            style="height: 150px"
+                        />
+                    </div>
+                    <div class="row-center">
+                        <h4>
+                            <?= message ?>
+                        </h4>
+                        <h6 data-i18n="text_WebviewClosed">
+                            Webview can now be closed
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?- include('../../layouts/footer_scripts') ?>
+        <script src="/js/utils/generic_script.js"></script>
+        <script>
+            window.onload = function () {
+                ReloadTranslation();
+            };
+        </script>
+        <!-- <script src="/js/payments/cybersource.js"></script> -->
+    </body>
+</html>

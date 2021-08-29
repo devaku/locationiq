@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="<?= language ?>">
+    <head>
+        <?- include('../../layouts/header', {title: title}); ?>
+
+        <!-- Page CSS -->
+        <link rel="stylesheet" href="/css/services/user_details.css" />
+    </head>
+    <body>
+        <div id="main-view" class="">
+            <div class="container zloading-button">
+                <div
+                    class="ejs-var-card-style column-center"
+                    style="
+                        --bgcolor: <?= uiStyle.bgcolor ?>;
+                        --textcolor: <?= uiStyle.textcolor?>;
+                    "
+                >
+                    <div class="column-center">
+                        <p data-i18n="text_PromoCode">Enter Promo Code</p>
+                        <input
+                            type="text"
+                            id="input-otp"
+                            style="margin-top: 10px"
+                            required
+                        />
+                    </div>
+                    <div class="modal-footer-container">
+                        <hr />
+                        <div class="row-space">
+                            <button
+                                data-i18n="btn_Submit"
+                                type="button"
+                                class="btn ui-button-style"
+                                style="
+                                    --button_bgcolor: <?= uiStyle.button_bgcolor
+                                        ?>;
+                                    --button_textcolor: <?=
+                                        uiStyle.button_textcolor?>;
+                                "
+                                onclick="Submit(this)"
+                            >
+                                Submit
+                            </button>
+                            <button
+                                type="button"
+                                data-i18n="btn_Cancel"
+                                class="btn ui-button-style"
+                                style="
+                                    --button_bgcolor: <?= uiStyle.button_bgcolor
+                                        ?>;
+                                    --button_textcolor: <?=
+                                        uiStyle.button_textcolor?>;
+                                "
+                                onclick="Cancel(this)"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div
+            id="loading-view"
+            style="height: 100vh"
+            class="column-center hidden"
+        >
+            <div id="loading-icon" class="loader"></div>
+        </div>
+
+        <!-- This is only used by VIBER -->
+        <?- include('../../layouts/z_close_view') ?>
+
+        <?- include('../../layouts/footer_scripts') ?>
+
+        <!-- Self Scripts -->
+        <script src="/js/services/promo_code.js"></script>
+    </body>
+</html>

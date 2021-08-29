@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="<?= language ?>">
+    <head>
+        <?- include('../../layouts/header', {title: title}); ?>
+
+        <!-- Page CSS -->
+        <link rel="stylesheet" href="/css/services/webtrace.css" />
+    </head>
+    <body>
+        <?- include('../../layouts/sweet_text'); ?>
+        <code class="hidden">
+            <div id="ejs-var-guest_list">
+                <?= JSON.stringify(guestJson) ?>
+            </div>
+            <div id="ejs-var-uistyle">
+                <?= JSON.stringify(uiStyle)?>
+            </div>
+        </code>
+
+        <div id="main-view">
+            <div class="container zloading-button">
+                <div
+                    class="ejs-var-card-style"
+                    style="
+                        --bgcolor: <?= uiStyle.bgcolor ?>;
+                        --textcolor: <?= uiStyle.textcolor?>;
+                    "
+                >
+                    <div class="scrollable-box layout-column-center">
+                        <!-- Name -->
+                        <div>
+                            <div class="col-md-auto">
+                                <div class="field-group">
+                                    <label
+                                        data-i18n="label_MainGuest"
+                                        class="small"
+                                        for="name"
+                                        style="
+                                            --bgcolor: <?= uiStyle.bgcolor ?>;
+                                        "
+                                    >
+                                        Main Guest
+                                    </label>
+                                    <button
+                                        onclick="OpenGuestDetails(this)"
+                                        class="element-full form-inputs item-space ejs-var-ui-text-style"
+                                    >
+                                        <span>
+                                            <?= name ?>
+                                        </span>
+                                        <input
+                                            type="hidden"
+                                            name="index-value"
+                                            value="1"
+                                        />
+                                    </button>
+                                    <img src="" />
+
+                                    <input
+                                        type="hidden"
+                                        name="index-value"
+                                        value="1"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row-space">
+                        <button
+                            data-i18n="btn_Submit"
+                            id="button-submit"
+                            class="ejs-var-ui-button-style ui-button-fat text-bold"
+                            style="
+                                --button_bgcolor: <?= uiStyle.button_bgcolor ?>;
+                                --button_textcolor: <?= uiStyle.button_textcolor
+                                    ?>;
+                            "
+                        >
+                            Submit
+                        </button>
+                        <? if (order_method.includes('DINE')) { ?>
+                        <button
+                            data-i18n="btn_AddGuest"
+                            id="button-add-more"
+                            class="ejs-var-ui-button-style ui-button-fat text-bold"
+                            style="
+                                --button_bgcolor: <?= uiStyle.button_bgcolor ?>;
+                                --button_textcolor: <?= uiStyle.button_textcolor
+                                    ?>;
+                            "
+                        >
+                            Add Guest
+                        </button>
+                        <? } ?>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODAL -->
+            <div
+                class="modal fade"
+                id="trace-modal"
+                tabindex="-1"
+                role="dialog"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div
+                                class="ejs-var-card-style column-center"
+                                style="
+                                    --bgcolor: <?= uiStyle.bgcolor ?>;
+                                    --textcolor: <?= uiStyle.textcolor?>;
+                                "
+                            >
+                                <div class="column-center">
+                                    <!-- FORM ITEMS -->
+                                    <input
+                                        type="hidden"
+                                        id="guest-index"
+                                        value=""
+                                    />
+
+                                    <input
+                                        type="hidden"
+                                        id="modal-mode"
+                                        value=""
+                                    />
+
+                                    <!-- Name -->
+                                    <div class="col-md-12">
+                                        <div class="field-group">
+                                            <label
+                                                data-i18n="label_Name"
+                                                class="small"
+                                                for="name"
+                                                style="
+                                                    --bgcolor: <?=
+                                                        uiStyle.bgcolor ?>;
+                                                "
+                                            >
+                                                Name
+                                            </label>
+                                            <input
+                                                class="ui-form-input form-inputs ui-form-input-validation"
+                                                type="text"
+                                                name="name"
+                                                size="30"
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <!-- Phone -->
+                                    <div class="col-md-12">
+                                        <div class="field-group">
+                                            <label
+                                                data-i18n="label_Phone"
+                                                class="small"
+                                                for="phone"
+                                                style="
+                                                    --bgcolor: <?=
+                                                        uiStyle.bgcolor ?>;
+                                                "
+                                            >
+                                                Phone
+                                            </label>
+                                            <input
+                                                class="ui-form-input form-inputs"
+                                                type="tel"
+                                                name="phone"
+                                                size="30"
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <!-- Address -->
+                                    <div class="col-md-12">
+                                        <div class="field-group">
+                                            <label
+                                                data-i18n="label_Address"
+                                                class="small"
+                                                for="address"
+                                                style="
+                                                    --bgcolor: <?=
+                                                        uiStyle.bgcolor ?>;
+                                                "
+                                            >
+                                                Address
+                                            </label>
+                                            <input
+                                                class="ui-form-input form-inputs"
+                                                type="text"
+                                                name="address"
+                                                size="30"
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <hr />
+                                    <div class="row-space element-full">
+                                        <!-- Temperature -->
+                                        <label
+                                            data-i18n="label_Temperature"
+                                            for="temperature"
+                                            class="item-space item-no-bottom-margin"
+                                            >Temperature :
+                                        </label>
+                                        <input
+                                            class="ui-form-input ui-form-input-validation"
+                                            size="6"
+                                            type="text"
+                                            name="temperature"
+                                            required
+                                        />
+                                    </div>
+                                    <!-- Questionnaire portion -->
+                                    <div class="column-center">
+                                        <!-- Question 1 -->
+                                        <p
+                                            data-i18n="text_QuestionnaireOne"
+                                            style="
+                                                margin-top: 3px;
+                                                text-align: left;
+                                            "
+                                        >
+                                            Are you currently experiencing any
+                                            type of the following symptoms:
+                                            Fever, Sore Throat, Difficulty
+                                            Breathing, Body Aches?
+                                        </p>
+                                        <div class="row-space element-full">
+                                            <div class="row-space">
+                                                <input
+                                                    class="item-space ui-form-input ui-form-input-validation"
+                                                    type="radio"
+                                                    name="health_q1"
+                                                    id=""
+                                                    value="YES"
+                                                />
+                                                <label
+                                                    data-i18n="label_Yes"
+                                                    class="item-no-bottom-margin"
+                                                    for="health_q1"
+                                                >
+                                                    YES
+                                                </label>
+                                            </div>
+
+                                            <div class="row-space">
+                                                <input
+                                                    class="item-space ui-form-input ui-form-input-validation"
+                                                    type="radio"
+                                                    name="health_q1"
+                                                    id=""
+                                                    value="NO"
+                                                />
+                                                <label
+                                                    data-i18n="label_No"
+                                                    class="item-no-bottom-margin"
+                                                    for="health_q1"
+                                                >
+                                                    NO
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <!-- acknowledgement -->
+                                    <div class="row-space">
+                                        <input
+                                            class="item-space ui-form-input ui-form-input-validation"
+                                            type="checkbox"
+                                            name="acknowledgement"
+                                            id=""
+                                        />
+                                        <p
+                                            data-i18n="text_Acknowledgement"
+                                            style="text-align: left"
+                                        >
+                                            I acknowledge that the information
+                                            I've given is accurate and complete.
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row-space element-full">
+                                    <button
+                                        data-i18n="btn_Done"
+                                        id="modal-done"
+                                        class="ejs-var-ui-button-style ui-button-fat"
+                                        style="
+                                            --button_bgcolor: <?=
+                                                uiStyle.button_bgcolor ?>;
+                                            --button_textcolor: <?=
+                                                uiStyle.button_textcolor ?>;
+                                        "
+                                        onclick="DoneGuestDetails(this)"
+                                    >
+                                        Done
+                                    </button>
+                                    <button
+                                        id="modal-button-cancel"
+                                        data-i18n="btn_Cancel"
+                                        class="ejs-var-ui-button-style ui-button-fat"
+                                        style="
+                                            --button_bgcolor: <?=
+                                                uiStyle.button_bgcolor ?>;
+                                            --button_textcolor: <?=
+                                                uiStyle.button_textcolor ?>;
+                                        "
+                                        onclick="CloseTheModal(this)"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        id="modal-add-more"
+                                        data-i18n="btn_AddMore"
+                                        onclick="AddMoreGuestDetails(this)"
+                                        class="ui-button-fat ejs-var-ui-button-style"
+                                        style="
+                                            --button_bgcolor: <?=
+                                                uiStyle.button_bgcolor ?>;
+                                            --button_textcolor: <?=
+                                                uiStyle.button_textcolor ?>;
+                                        "
+                                    >
+                                        Add More
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading animation -->
+        <?- include('../../layouts/loading_view') ?>
+
+        <!-- This is only used by VIBER -->
+        <?- include('../../layouts/z_close_view') ?>
+
+        <?- include('../../layouts/footer_scripts') ?>
+
+        <!-- Self Scripts -->
+        <script src="/js/services/webtrace.js"></script>
+    </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="<?= language ?>">
+    <head>
+        <?- include('../../../layouts/header', {title: title}); ?>
+
+        <script
+            type="text/javascript"
+            src="https://<?= squarejs ?>/v2/paymentform"
+        ></script>
+
+        <!-- Page CSS -->
+        <link rel="stylesheet" href="/css/payments/creditformtemplate.css" />
+        <link rel="stylesheet" href="/css/payments/square.css" />
+
+        <!-- UI Transaction -->
+        <link
+            rel="stylesheet"
+            href="/css/payments/templates/uitransaction.css"
+        />
+    </head>
+    <body>
+        <div id="main-view">
+            <div class="container zloading-button">
+                <?- include('../../../layouts/sweet_text'); ?>
+                <?- include('../utils/uitransaction', {uiName: name, uiEmail: email, uiLanguage: language, uiCurrency: currency, uiAmount: amount, uiPaymentLogo: paymentLogo, 
+                    uiPaymentText: paymentText, uiStyle}); ?>
+                <hr style="margin-top: 20px" />
+
+                <!-- Square specific form -->
+                <div class="animate__animated animate__fadeIn form-container">
+                    <input
+                        id="ejs-var-square-application-id"
+                        type="hidden"
+                        name="square-application-id"
+                        value="<?= applicationid ?>"
+                    />
+                    <div id="sq-card-number"></div>
+                    <div class="third" id="sq-expiration-date"></div>
+                    <div class="third" id="sq-cvv"></div>
+                    <div class="third" id="sq-postal-code"></div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="">
+                    <button
+                        id="btn-submit"
+                        class="button-credit-card zloading-button"
+                    >
+                        Pay
+                        <?= currency ?>
+                        <?= amount ?>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Loading animation -->
+        <?- include('../../../layouts/loading_view') ?>
+
+        <!-- This is only used by VIBER -->
+        <?- include('../../../layouts/z_close_view') ?>
+
+        <?- include('../../../layouts/footer_scripts') ?>
+
+        <!-- Self Scripts -->
+        <script src="/js/payments/square.js"></script>
+    </body>
+</html>

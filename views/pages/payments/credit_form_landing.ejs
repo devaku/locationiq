@@ -1,0 +1,21 @@
+<div id="main-view">
+    <div class="column-center element-full-height">
+        <? if (status === 'success') { ?>
+        <img
+            src="/assets/card-success.svg"
+            alt="Transaction successful!"
+            src="/assets/card-success.svg"
+            style="height: 150px;"
+        />
+        <? } else { ?>
+        <img
+            src="/assets/card-blocked.svg"
+            alt="Transaction failure!"
+            src="/assets/card-blocked.svg"
+            style="height: 150px;"
+        />
+        <? } ?>
+        <h4><?= header ?></h4>
+        <h6><?= message ?></h6>
+    </div>
+</div>

@@ -1,0 +1,99 @@
+/* Variable Classes */
+
+.var-body {
+    background-color: var(--bgcolor);
+    color: var(--textcolor);
+}
+
+.var-page-button {
+    background-color: var(--button-color);
+    border-color: var(--button-color);
+    color: var(--button-textcolor);
+}
+
+img {
+    max-height: 80px;
+    width: auto;
+}
+
+.column-normal {
+    align-items: normal;
+}
+
+.close-button-container {
+    width: 100%;
+    text-align: center;
+}
+
+.close-button-container > input[type='button'],
+.close-button-container > button {
+    outline: none;
+    width: 80%;
+    border-radius: 20px;
+}
+
+/* TABLE RELATED */
+
+.table-container {
+    width: 100%;
+    margin: 10px 0;
+}
+
+table {
+    width: 100%;
+}
+
+tr {
+    width: 300px;
+}
+
+tr > th:first-child {
+    width: 100px;
+    text-align: left;
+}
+
+tr > th:nth-child(2) {
+    text-align: right;
+    width: 25px;
+}
+tr > th:nth-child(3) {
+    text-align: right;
+    width: 75px;
+}
+
+tr > td:nth-child(1) {
+    vertical-align: top;
+    text-align: left;
+}
+
+tr > td:nth-child(2) {
+    vertical-align: top;
+    text-align: right;
+    font-size: smaller;
+}
+
+tr > td:nth-child(2) > span {
+    font-size: smaller;
+}
+
+tr > td:nth-child(3) {
+    vertical-align: top;
+    text-align: right;
+}
+/*
+tr > td:not(:first-child) {
+    vertical-align: top;
+    text-align: right;
+    font-size: smaller;
+    font-weight: bolder;
+}
+*/
+thead > tr:first-child {
+    background-color: black;
+    color: white;
+}
+
+tbody {
+    border-top: 2px solid deepskyblue;
+    border-bottom: 2px solid deepskyblue;
+}

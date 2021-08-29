@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="<?= language ?>">
+    <head>
+        <?- include('../../layouts/header', {title: title}); ?>
+
+        <!-- Page CSS -->
+        <link rel="stylesheet" href="/css/services/weborder.css" />
+    </head>
+    <body style="overflow: hidden">
+        <? include('../../layouts/sweet_text'); ?>
+        <code class="hidden">
+            <div id="ejs-var-navtabs">
+                <?= JSON.stringify(navigation) ?>
+            </div>
+            <div id="ejs-var-navstyle">
+                <?= JSON.stringify(navstyle) ?>
+            </div>
+            <input
+                type="hidden"
+                id="ejs-var-page-mode"
+                name=""
+                value="<?= mode ?>"
+            />
+            <input
+                type="hidden"
+                id="ejs-var-baseurl"
+                name=""
+                value="<?= baseurl ?>"
+            />
+
+            <? if (ruleset_reward) { ?>
+            <input
+                type="hidden"
+                id="ejs-var-reward-max"
+                name=""
+                value="<?= ruleset_reward.max ?>"
+            />
+            <input
+                type="hidden"
+                id="ejs-var-reward-min"
+                name=""
+                value="<?= ruleset_reward.min ?>"
+            />
+            <input
+                type="hidden"
+                id="ejs-var-reward-count"
+                name=""
+                value="<?= ruleset_reward.count ?>"
+            />
+            <? } ?>
+        </code>
+        <div id="main-view" style="overflow-y: hidden" class="">
+            <div class="container zloading-button">
+                <!-- TOP AREA -->
+                <!-- Search Box, Navigation Area, and Message Area -->
+                <div id="top-section" class="column-center">
+                    <!-- Navigation area -->
+                    <!-- row-left-align -->
+                    <? if (navigation != '') {?>
+                    <div id="navigation-area" class="hidden element-full"></div>
+                    <? }?>
+
+                    <? if (categoryTabs != '') {?>
+                    <div
+                        id="navigation-area"
+                        class="element-full row-left-align"
+                    >
+                        <?- categoryTabs ?>
+                    </div>
+                    <? }?>
+                </div>
+                <!-- MIDDLE AREA -->
+                <div class="lower-section">
+                    <!-- Cards box -->
+                    <div id="card-area" class="bot-cards-spaces">
+                        <!-- COVER IMAGE -->
+                        <? if (coverSection != ''){ ?>
+                        <div id="cover-area" class="column-center">
+                            <?- coverSection ?>
+                        </div>
+                        <? } ?>
+                        <!-- TOP MESSAGES -->
+                        <? if (messages != ''){ ?>
+                        <div id="message-area">
+                            <?- messages ?>
+                        </div>
+                        <? } ?>
+
+                        <!-- Normal cards -->
+                        <? if (cards != '') { ?>
+                        <?- cards ?>
+                        <? } ?>
+
+                        <!-- Array cards -->
+                        <? if (htmlArray != '') { ?>
+                        <code id="marker-top"></code>
+                        <?- htmlArray ?>
+                        <code id="marker-bottom"></code>
+                        <? } ?>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal for SEARCH -->
+            <!-- <div
+                class="modal fade"
+                id="modalSearch"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">
+                                Search
+                            </h5>
+                            <button
+                                type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                            >
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body"></div>
+                         <div class="modal-footer">
+                            <button
+                                type="button"
+                                class="btn ejs-var-style-card-button"
+                                data-dismiss="modal"
+                                onclick="TextSearch(this)"
+                            >
+                                Search
+                            </button>
+                        </div> -->
+            <!-- </div>
+                </div>
+            </div> -->
+
+            <!-- BOTTOM AREA -->
+            <!-- Button footer -->
+            <div id="footer-area">
+                <? if (mode === 'rewards') {?>
+                <button
+                    data-i18n="btn_Confirm"
+                    class="
+                        footer-bar
+                        button-rewards
+                        element-full
+                        ejs-var-style-card-button
+                    "
+                    style="
+                        font-size: larger;
+                        font-weight: bold;
+                        border: none;
+                        z-index: 10;
+                    "
+                    value="<?= promoID ?>"
+                    onclick="ButtonCommandRewards(this)"
+                >
+                    Confirm
+                </button>
+                <? }?>
+
+                <!-- Search Icon -->
+                <div
+                    id="search-area"
+                    class="
+                        row-space
+                        <?=
+                        mode
+                        ===
+                        'rewards'
+                        ?
+                        'hidden'
+                        :
+                        'hidden'?>
+                    "
+                    style="padding-left: 5px; position: relative; bottom: 40px"
+                >
+                    <input
+                        class="search-textbox"
+                        type="text"
+                        name=""
+                        placeholder="Search for products here!"
+                        id=""
+                    />
+                    <div class="search-icon">
+                        <button
+                            class="search-button img-button"
+                            data-dismiss="modal"
+                            onclick="TextSearch(this)"
+                        >
+                            <img
+                                class="search-img"
+                                src="/assets/search.png"
+                                alt="Search!"
+                            />
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <? if (footer) { ?>
+                <div
+                    class="
+                        <?=
+                        mode
+                        ===
+                        'rewards'
+                        ?
+                        'hidden'
+                        :
+                        ''
+                        ?>
+                        footer-bar
+                        row-space
+                        ejs-var-style-footer
+                    "
+                >
+                    <? if (footer) { ?>
+                    <?- footer ?>
+                    <? } ?>
+
+                    <? if (mode === 'menu') {?>
+                    <div class="column-center">
+                        <?- footerSection ?>
+                    </div>
+                    <? }?>
+                </div>
+                <? } ?>
+
+                <? if (footerSection) { ?>
+                <div class="footer-bar column-center ejs-var-style-footer">
+                    <?- footerSection ?>
+                </div>
+                <? } ?>
+            </div>
+        </div>
+
+        <!-- Bootstrap Scripts -->
+        <script
+            src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"
+        ></script>
+
+        <!-- Loading animation -->
+        <?- include('../../layouts/loading_view') ?>
+
+        <!-- This is only used by VIBER -->
+        <?- include('../../layouts/z_close_view') ?>
+
+        <?- include('../../layouts/footer_scripts') ?>
+
+        <!-- Sweetalert -->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <!-- Generic Script -->
+        <script src="/js/utils/generic_script.js"></script>
+
+        <!-- Self Scripts -->
+        <script src="/js/services/weborder.js"></script>
+    </body>
+</html>

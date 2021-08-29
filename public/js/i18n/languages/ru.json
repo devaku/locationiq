@@ -1,0 +1,12 @@
+{
+    "@metadata": {
+      "authors": [
+        "Alex"
+      ],
+      "last-updated": "2019-05-06",
+      "locale": "ru",
+      "message-documentation": "documentation"
+    },
+    "welcome": "Добро пожаловать!",
+    "glad_to_see": "Мы рады вас видеть!"
+  }

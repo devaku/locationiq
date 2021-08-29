@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="<?= language ?>">
+    <head>
+        <?- include('../../../layouts/header', {title: title}); ?>
+        <link
+            rel="stylesheet"
+            href="https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/3.5.0/adyen.css"
+        />
+        <link rel="stylesheet" href="/css/payments/adyen_checkout.css" />
+    </head>
+    <body>
+        <code>
+            <input
+                type="hidden"
+                name="ejs-var-context"
+                id="ejs-var-context"
+                value="<?= context ?>"
+            />
+            <input
+                type="hidden"
+                name="ejs-var-paymentmethod"
+                id="ejs-var-paymentmethod"
+                value="<?= paymentMethod ?>"
+            />
+            <input
+                type="hidden"
+                name="ejs-var-originkey"
+                id="ejs-var-originkey"
+                value="<?= originKey ?>"
+            />
+        </code>
+        <div class="payment-method">
+            <div id="dropin-container">
+                <!-- Drop-in will be rendered here -->
+            </div>
+        </div>
+
+        <?- include('../../../layouts/footer_scripts') ?>
+
+        <!-- Adyen Script -->
+        <script src="https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/3.5.0/adyen.js"></script>
+
+        <script src="/js/payments/adyen.js"></script>
+        <script src="/js/utils/generic_script.js"></script>
+    </body>
+</html>

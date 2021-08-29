@@ -1,0 +1,285 @@
+#loading-view {
+    height: calc(100vh - 55px);
+}
+
+.container {
+    height: calc(100vh - 55px);
+}
+
+/* SEARCH AREA */
+
+#search-area {
+    width: 100%;
+}
+
+.search-img {
+    height: 30px;
+}
+
+.search-textbox {
+    width: 100%;
+    margin-top: 5px;
+    border: 1px solid black;
+    border-radius: 8px;
+}
+
+.search-textbox:placeholder-shown {
+    text-align: center;
+}
+
+.search-textbox:focus {
+    outline: none;
+}
+
+.search-button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.search-button:active {
+    /* background-color: white; */
+    border: 2px solid black;
+}
+
+/* NAVIGATION AREA */
+
+#navigation-area {
+    width: 100%;
+    height: 65px;
+    align-items: center;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin: 5px;
+}
+
+.row-left-align {
+    display: flex;
+}
+
+.nav-button {
+    height: 90%;
+    white-space: nowrap;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    /* border-style: none; */
+    box-shadow: none;
+}
+
+.nav-button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.nav-button:active {
+    /* background-color: white; */
+    border: 2px solid black;
+}
+
+.lower-section {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    /* height: calc(100% - 55px); */
+}
+
+/* MESSAGE AREA */
+
+#message-area {
+    width: 100%;
+}
+
+.ejs-var-card-style-weborder {
+    border-radius: 10px;
+    /* padding: 10px; */
+    margin: 10px 0;
+    border: none;
+    background-color: var(--bgcolor);
+    color: var(--textcolor);
+    box-shadow: 3px 3px 5px 6px gray;
+}
+
+.ejs-var-style-message {
+    background-color: var(--message_bgcolor);
+    color: var(--message_textcolor);
+}
+
+#card-area > .ejs-var-style-message {
+    width: 100%;
+}
+
+.message-scrollable {
+    max-height: 93px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.message-scrollable p {
+    margin: 0;
+}
+
+.ui-border {
+    border: 1px solid darkgrey;
+    border-radius: 12px;
+    padding: 5px;
+}
+
+/* MIDDLE AREA */
+
+/*
+#card-area .bot-card{
+    margin: 3px 0;
+}
+*/
+
+.bot-cards-spaces {
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    margin: 1px 0;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.bot-card-full {
+    min-height: 100px;
+    width: 100%;
+    margin: 8px 8px;
+}
+
+.bot-card-compact {
+    display: flex;
+    flex-direction: column;
+    /*align-content: space-around;
+    align-items: center;
+    justify-content: center;*/
+    min-height: 150px;
+    width: 45%;
+    margin: 8px 8px;
+}
+
+.bot-card-actions {
+    display: flex;
+    flex-direction: column;
+    /*height: 100%;*/
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+}
+.bot-card-img {
+    border-radius: 12px 12px 0 0;
+    width: 100%;
+    /* margin: 5px; */
+}
+
+.ejs-var-style-text-title {
+    color: var(--textcolor_title);
+}
+
+.ejs-var-style-text-subtitle {
+    color: var(--textcolor_subtitle);
+}
+
+.text-section p {
+    margin: 0; /*0 5px; */
+    white-space: pre-line;
+    text-align: left;
+}
+
+.text-title {
+    font-size: small;
+}
+
+.text-subtitle {
+    font-size: smaller;
+}
+
+.ejs-var-style-card-button {
+    background-color: var(--bgcolor);
+    color: var(--textcolor);
+}
+
+.card-section {
+    margin-top: auto;
+    min-height: 30px;
+}
+
+.card-section button {
+    margin: 2px;
+}
+
+.card-button {
+    width: 90%;
+    border-radius: 8px;
+    border: 1px solid transparent;
+}
+
+.card-button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.card-button:active {
+    border: 2px solid black;
+}
+
+/* FOOTER */
+
+.footer-bar {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    border-top: 1px solid darkgrey;
+}
+
+.ejs-var-style-footer {
+    background-color: var(--bgcolor);
+}
+
+.footer-icon {
+    width: 40px;
+}
+
+.footer-img {
+    height: 40px;
+}
+.img-button {
+    border: none;
+    background-color: var(--bgcolor);
+    padding: 0;
+}
+
+.footer-button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.footer-button:active {
+    /* background-color: white; */
+    border: 2px solid black;
+}
+
+.footer-label {
+    font-size: 10px;
+    font-weight: normal;
+    margin: 0;
+    color: var(--textcolor);
+    background-color: whitesmoke;
+}
+
+.footer-normal-button {
+    background-color: var(--bgcolor);
+    color: var(--textcolor);
+    height: 25px;
+    border: none;
+    width: 100%;
+}

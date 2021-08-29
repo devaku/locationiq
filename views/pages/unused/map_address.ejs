@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="<?= language ?>">
+    <head>
+        
+        <?- include('../../layouts/header', {title: title}); ?>
+
+        <!-- Page CSS -->
+        <link rel="stylesheet" href="/css/services/map_address.css" />
+    </head>
+    <body>
+        <?- include('../../layouts/sweet_text'); ?>
+        <div id="main-view">
+            <code>
+                <input
+                    type="hidden"
+                    id="ejs-var-address-info-array"
+                    name="address-info-array"
+                    value="<?= addressInfoArray ?>"
+                />
+
+                <input
+                    type="hidden"
+                    id="ejs-var-address-info-flag"
+                    name="address-info-flag"
+                    value="<?= addressInfoExists ?>"
+                />
+            </code>
+            <div class="row-center">
+                <div class="search-box-container row-center">
+                    <input
+                        id="pac-input"
+                        class="controls"
+                        type="text"
+                        style="height: 40px; width: 80%"
+                        placeholder="Search Box"
+                    />
+
+                    <button
+                        data-i18n="btn_Search"
+                        class="btn btn-danger"
+                        onclick="BeginSearch()"
+                        style="margin-left: 5px"
+                    >
+                        Search
+                    </button>
+                    <button
+                        data-i18n="btn_Clear"
+                        class="btn btn-info"
+                        onclick="ClearSearch()"
+                        style="margin-left: 5px"
+                    >
+                        Clear
+                    </button>
+                    <!-- <input
+                        data-i18n="btn_Clear"
+                        type="button"
+                        class="btn btn-danger"
+                        value="Clear"
+                        onclick="ClearSearch()"
+                    /> -->
+                </div>
+            </div>
+            <div id="map" class=""></div>
+            <div class="bottom-box-container row-space">
+                <input
+                    type="hidden"
+                    id="input-lat-reference"
+                    name="latitude"
+                    value="<?= referenceLat ?>"
+                />
+                <input
+                    type="hidden"
+                    id="input-long-reference"
+                    name="longitude"
+                    value="<?= referenceLong ?>"
+                />
+                <input type="hidden" id="input-lat" name="latitude" value="0" />
+                <input
+                    type="hidden"
+                    id="input-long"
+                    name="longitude"
+                    value="0"
+                />
+                <button
+                    data-i18n="btn_Submit"
+                    class="btn btn-primary element-full"
+                    style="
+                        font-size: larger;
+                        font-weight: bold;
+                        border: 0;
+                        height: 50px;
+                        position: fixed;
+                        bottom: 50px;
+                        z-index: 10;
+                    "
+                    id="btn-submit"
+                >
+                    Submit
+                </button>
+                <!-- <input type="button" value="SUBMIT" id="btn-submit" /> -->
+            </div>
+
+            <!-- Modal Address Field -->
+            <!-- <div
+                class="modal fade"
+                id="modal-address-fields"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body"></div>
+                        <div class="modal-footer">
+                            <button
+                                type="button"
+                                class="btn btn-primary"
+                                id="btn-address-field-submit"
+                                data-dismiss="modal"
+                            >
+                                Submit
+                            </button>
+                            <button
+                                type="button"
+                                class="btn btn-secondary"
+                                id="btn-address-field-cancel"
+                                data-dismiss="modal"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- Modal -->
+            <div
+                class="modal fade"
+                id="modal-popup"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="modal-message"></div>
+                            <div id="modal-address-fields">
+                                <div>
+                                    <p
+                                        data-i18n="label_AdditionalAddressInformation"
+                                        style="
+                                            text-align: center;
+                                            margin: 0;
+                                            font-weight: 700;
+                                            position: relative;
+                                            top: 6px;
+                                        "
+                                    >
+                                        Additional Address Information
+                                    </p>
+                                </div>
+                                <!-- Generated Address Fields here -->
+                                <div class="address-fields"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                                data-i18n="btn_Submit"
+                                type="button"
+                                class="btn btn-primary"
+                                id="btn-final-submit"
+                                data-dismiss="modal"
+                            >
+                                Submit
+                            </button>
+                            <button
+                                data-i18n="btn_Cancel"
+                                type="button"
+                                class="btn btn-secondary"
+                                data-dismiss="modal"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <?- include('../../layouts/z_close_view') ?>
+
+        <?- include('../../layouts/footer_scripts') ?>
+
+        <!-- Self Scripts -->
+        <script src="/js/services/map_address.js"></script>
+
+        <!-- Google Maps Script -->
+        <script
+            src="https://maps.googleapis.com/maps/api/js?key=<?= apikey ?>&libraries=places&callback=initAutocomplete"
+            async
+            defer
+        ></script>
+    </body>
+</html>

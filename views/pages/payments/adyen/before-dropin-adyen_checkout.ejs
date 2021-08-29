@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <?- include('../../../layouts/header', {title: title}); ?>
+
+        <link rel="stylesheet" href="/css/payments/adyen_checkout.css" />
+    </head>
+    <body>
+        <code>
+            <input
+                type="hidden"
+                name="ejs-var-context"
+                id="ejs-var-context"
+                value="<?= context ?>"
+            />
+            <input
+                type="hidden"
+                name="ejs-var-paymentsession"
+                id="ejs-var-paymentsession"
+                value="<?= paymentsession ?>"
+            />
+            <input
+                type="hidden"
+                name="ejs-var-serverweburl"
+                id="ejs-var-serverweburl"
+                value="<?= serverweburl ?>"
+            />
+        </code>
+        <div id="your-payment-div" class="container"></div>
+
+        <!-- ADYEN SCRIPT-->
+        <script src="https://checkoutshopper-test.adyen.com/checkoutshopper/assets/js/sdk/checkoutSDK.1.6.0.min.js"></script>
+
+        <?- include('../../../layouts/footer_scripts') ?>
+
+        <script src="/js/payments/adyen.js"></script>
+        <script src="/js/utils/generic_script.js"></script>
+    </body>
+</html>

@@ -1,0 +1,10 @@
+.button-container > button {
+    margin: 3px 0;
+}
+
+.ejs-var-button {
+    height: 30px;
+    width: 125px;
+    background-color: var(--bgcolor);
+    color: var(--textcolor);
+}

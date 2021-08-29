@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        />
+    </head>
+    <body>
+        <main>
+            <!-- <div
+                class="container"
+                style="font-size: 100px; text-align: center; color: black"
+            >
+                Please close this webview.
+            </div> -->
+        </main>
+        <script>
+            console.log('HELLO');
+            // Include the Messenger Extensions JS SDK
+            (function (d, s, id) {
+                var js,
+                    fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {
+                    return;
+                }
+                js = d.createElement(s);
+                js.id = id;
+                js.src = '//connect.facebook.net/en_US/messenger.Extensions.js';
+                fjs.parentNode.insertBefore(js, fjs);
+            })(document, 'script', 'Messenger');
+
+            // the Messenger Extensions JS SDK is done loading
+            window.extAsyncInit = function () {
+                console.log('MESSENGER EXTENSION RUNNNING');
+                MessengerExtensions.requestCloseBrowser(
+                    function success() {
+                        console.log('Success');
+                        // webview closed
+                        document.body.style.backgroundColor = 'green';
+                    },
+                    function error(err) {
+                        console.log('ERROR');
+                        console.log(err);
+                        // an error occurred
+                        document.body.style.backgroundColor = 'white';
+                        document.body.innerHTML = `
+                <p style="color:lightgray; font-size:20px ">${err}</p>
+                <br><br><br>
+                <p style="color:black; font-size:50px; text-align:center">You may now close this page.</p>
+            `;
+                    }
+                );
+            };
+        </script>
+    </body>
+</html>

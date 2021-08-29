@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="<?= language ?>">
+    <head>
+        <?- include('../../layouts/header', {title: title}); ?>
+
+        <!-- Page CSS -->
+        <link rel="stylesheet" href="/css/services/receipt_summary.css" />
+        <link rel="stylesheet" href="/css/services/receipt_table.css" />
+    </head>
+    <body
+        class="var-body"
+        style="
+            --textcolor: <?= receiptJson.textcolor?>;
+            --bgcolor: <?= receiptJson.bgcolor?>;
+        "
+    >
+        <div id="main-view">
+            <!-- Top Header -->
+            <div class="column-center">
+                <div class="column-center">
+                    <img
+                        src="<?= receiptJson.logo_url ?>"
+                        alt="<?= receiptJson.merchant ?>"
+                    />
+                </div>
+            </div>
+            <span id="ejs-generated-table" class="hidden"></span>
+            <!-- Footer -->
+            <span id="ejs-receipt-bottom-footer"></span>
+        </div>
+        <code id="ejs-receipt-json" class="hidden">
+            <?= JSON.stringify(receiptJson) ?>
+        </code>
+
+        <?- include('../../layouts/z_close_view') ?>
+        <?- include('../../layouts/footer_scripts') ?>
+
+        <!-- Self Scripts -->
+        <script src="/js/services/receipt_table.js"></script>
+        <script src="/js/services/receipt_summary.js"></script>
+    </body>
+</html>

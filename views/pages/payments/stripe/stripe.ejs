@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="<?= language ?>">
+    <head>
+        <?- include('../../../layouts/header', {title: title}); ?>
+
+        <!--Stripe-->
+        <script src="https://js.stripe.com/v3/"></script>
+
+        <!-- Page CSS -->
+        <link rel="stylesheet" href="/css/payments/stripe.css" />
+
+        <!-- UI Transaction -->
+        <link
+            rel="stylesheet"
+            href="/css/payments/templates/uitransaction.css"
+        />
+    </head>
+    <body>
+        <div id="main-view">
+            <div class="container">
+                <code>
+                    <input
+                        type="hidden"
+                        id="ejs-var-stripe-key"
+                        name="stripe-key"
+                        value="<?= stripeKey ?>"
+                    />
+
+                    <input
+                        type="hidden"
+                        id="ejs-var-stripe-account"
+                        name="stripe-key"
+                        value="<?= stripeAccount ?>"
+                    />
+                </code>
+                <?- include('../../../layouts/sweet_text'); ?>
+                <?- include('../utils/uitransaction', {uiName: name, uiEmail: '', uiLanguage: language, uiCurrency: currency, uiAmount: '', uiPaymentLogo: paymentLogo, 
+                    uiPaymentText: paymentText, uiStyle}); ?>
+                <!-- Email -->
+                <div class="col-md-12">
+                    <div class="field-group">
+                        <label
+                            data-i18n="label_Email"
+                            class="small"
+                            style="--bgcolor: #ffffff"
+                        >
+                            Email
+                        </label>
+                        <input
+                            class="border-frame input-full"
+                            type="email"
+                            id="txtboxemail"
+                            name="email"
+                            placeholder="Email"
+                            title="Please input a valid email address"
+                            required
+                            value="<?= email ?>"
+                        />
+                    </div>
+                </div>
+                <!-- Amount -->
+                <div class="col-md-12">
+                    <div class="field-group">
+                        <label
+                            data-i18n="label_Amount"
+                            class="small"
+                            style="--bgcolor: #ffffff"
+                        >
+                            Amount
+                        </label>
+                        <p
+                            class="border-frame ui-transaction-p"
+                            style="--bgcolor: <?= uiStyle.bgcolor ?>"
+                        >
+                            <?= currency ?>
+                            <?= amount ?>
+                        </p>
+                    </div>
+                </div>
+                <hr style="margin-top: 20px" />
+                <div class="card-input-container">
+                    <!-- Credit Card -->
+                    <div
+                        class="sr-main"
+                        style="position: relative; bottom: 15px"
+                    >
+                        <div class="col-md-12">
+                            <div class="field-group">
+                                <label
+                                    data-i18n="label_CreditCardNumber"
+                                    class="small"
+                                    style="--bgcolor: #ffffff"
+                                >
+                                    Credit Card
+                                </label>
+                                <!-- PAYMENT VIEW -->
+                                <form id="payment-form" class="sr-payment-form">
+                                    <div class="sr-combo-inputs-row">
+                                        <!--HOLDS THE STRIPE GENERATED INPUTS-->
+                                        <div
+                                            id="card-details"
+                                            class="sr-card-element element-full-width"
+                                        ></div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Amount HIDDEN -->
+                    <div class="col-md-12 hidden">
+                        <div class="field-group">
+                            <label
+                                data-i18n="label_Amount"
+                                class="small"
+                                style="--bgcolor: #ffffff"
+                            >
+                                Amount
+                            </label>
+                            <input
+                                class="border-frame input-full"
+                                type="text"
+                                id="txtboxamount"
+                                name="amount"
+                                placeholder="Total Charge"
+                                readonly
+                                value="<?= amount ?>"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="column-center">
+                        <button
+                            data-i18n="btn_Submit"
+                            class="btn btn-primary input-full text-bold zloading-button"
+                            type="button"
+                            id="btn-submit"
+                            value="SUBMIT"
+                            style="margin-top: 10px"
+                        >
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading animation -->
+        <?- include('../../../layouts/loading_view') ?>
+
+        <!-- This is only used by VIBER -->
+        <?- include('../../../layouts/z_close_view') ?>
+
+        <?- include('../../../layouts/footer_scripts') ?>
+
+        <!-- Self Scripts -->
+        <script src="/js/utils/generic_script.js"></script>
+        <script src="/js/payments/stripe.js"></script>
+    </body>
+</html>

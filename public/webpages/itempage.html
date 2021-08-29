@@ -1,0 +1,1472 @@
+<!-- prettier-ignore -->
+<html>
+
+<head>
+    <style>
+        .modal-header {
+            background: var(--modalbgcolor);
+            color: var(--fontcolor);
+        }
+
+        .modal-body {
+            max-height: calc(100% - 120px);
+            overflow-y: auto;
+            background: var(--modalbgcolor);
+            color: var(--fontcolor);
+        }
+
+        .modal-footer {
+            background: var(--modalbgcolor);
+            color: var(--fontcolor);
+            padding: 0px !important;
+        }
+
+        .styled {
+            border: 1px solid green;
+            overflow: hidden;
+            border-radius: 25px;
+            margin-bottom: 10px;
+        }
+
+        .styled select {
+            background: transparent;
+            border: 1px solid green;
+            border-radius: 25px;
+        }
+
+        .overflowhidden {
+            overflow: hidden;
+        }
+
+        html,
+        body {
+            position: relative;
+            height: 100%
+        }
+
+        .hidden {
+            visibility: hidden
+        }
+
+        .btn.small {
+            font-size: 0.7rem;
+            height: 27px;
+            line-height: 27px
+        }
+
+        .btn.x-small {
+            font-size: 0.6rem;
+            height: 20px;
+            line-height: 20px
+        }
+
+        .btn.btn-primary {
+            color: white;
+            background-color: #d03137;
+            border: 1px solid #d03137;
+            border: 1px solid #a7252a
+        }
+
+        .btn.btn-primary:hover {
+            background-color: #bd2b31
+        }
+
+        .fade-enter-active,
+        .fade-leave-active {
+            transition: opacity 0.5s
+        }
+
+        .fade-enter,
+        .fade-leave-to {
+            opacity: 0
+        }
+
+        .app-title {
+            font-size: 1.5rem;
+            margin-left: 15px
+        }
+
+        .no-margin {
+            margin: 0px
+        }
+
+        .select-tab {
+            width: 97%;
+            padding: 5px;
+            /*border: 3px solid #eee;*/
+            box-shadow: 1px 1px 5px;
+            border-radius: 5px;
+            margin: auto;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 0.75rem;
+            position: relative;
+            cursor: pointer
+        }
+
+        .select-tab.fix-150 {
+            height: 150px
+        }
+
+        .select-tab.fix-200 {
+            height: 145px
+        }
+
+        .select-tab.fix-200 img {
+            max-height: 130px
+        }
+
+        @media only screen and (min-width: 0) {
+            .select-tab.fix-200 {
+                height: 145px
+            }
+        }
+
+        @media only screen and (min-width: 600px) {
+            .select-tab.fix-200 {
+                height: 180px
+            }
+        }
+
+        @media only screen and (min-width: 992px) {
+            .select-tab.fix-200 {
+                height: 180px
+            }
+        }
+
+        @media only screen and (min-width: 1200px) {
+            .select-tab.fix-200 {
+                height: 180px
+            }
+        }
+
+        .select-tab.small {
+            width: 105px;
+            height: 105px
+        }
+
+        .select-tab span.checked-icn {
+            display: none
+        }
+
+        .select-tab.active {
+            border: 3px solid #10F608
+        }
+
+        .select-tab.active span.checked-icn {
+            display: block;
+            position: absolute;
+            right: 2px;
+            top: 2px
+        }
+
+        .select-tab.active span.checked-icn img {
+            width: 20px;
+            height: 20px
+        }
+
+        .select-tab span.extra-price {
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            background-color: #63D76C;
+            color: #000000;
+            padding: 5px 10px;
+            border-radius: 15px
+        }
+
+        .select-tab span.item-price {
+            position: absolute;
+            background-color: #63D76C;
+            color: #000000;
+            padding: 5px 10px;
+            border-radius: 15px;
+        }
+
+        .crust .crust-image {
+            margin-top: 10px
+        }
+
+        .text-limit {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical
+        }
+
+        .ingredient-container {
+            margin-bottom: 20px;
+            background-color: #00703c;
+            color: white;
+            max-width: 1024px;
+            margin: auto
+        }
+
+        .ingredient-container .ingredient-wrapper {
+            padding-top: 15px;
+            margin-bottom: 0
+        }
+
+        .ingredient-container .ingredient-wrapper .ingredient-item {
+            width: 120px;
+            height: 95px
+        }
+
+        .ingredient-container .ingredient-wrapper .ingredient-item img {
+            width: 50px;
+            height: 50px
+        }
+
+        .curve-rec {
+            border-radius: 10px
+        }
+
+        .selected-ingredients-container {
+            max-width: 1024px;
+            margin: auto
+        }
+
+        .selected-ingredients-container .selected-ingredients-wrapper {
+            height: 90px;
+            list-style-type: none;
+            overflow-x: auto;
+            white-space: nowrap;
+            margin: 0
+        }
+
+        .selected-ingredients-container .selected-ingredients-wrapper .selected-ingredients-item {
+            display: inline;
+            margin-left: 20px;
+            margin-right: 20px
+        }
+
+        .badge-container {
+            position: relative;
+            display: inline-block;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            margin-right: 20px;
+            cursor: pointer
+        }
+
+        .badge-container .badge-item {
+            background-color: #fa3e3e;
+            border-radius: 50%;
+            color: white;
+            padding: 3px 6px 4px 6px;
+            font-size: 0.65em;
+            border: 2px solid white;
+            position: absolute;
+            top: -8px;
+            right: -7px;
+            font-weight: 800;
+            line-height: 10px
+        }
+
+        .badge-container .badge-count-item {
+            background-color: #00703c;
+            border-radius: 50%;
+            color: white;
+            padding: 2px 5px 0px 5px;
+            font-size: 0.65em;
+            border: 2px solid white;
+            position: absolute;
+            bottom: -5px;
+            left: -7px;
+            overflow: auto
+        }
+
+        .-arrow {
+            position: relative;
+            display: inline-block;
+            margin-top: 20px;
+            width: 100%
+        }
+
+        .-arrow::before {
+            content: " ";
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent #d03137 transparent
+        }
+
+        .back-btn {
+            width: 50px;
+            background-color: #01542e;
+            padding-left: 10px
+        }
+
+        .back-btn-container {
+            height: 100%
+        }
+
+        .icn-back-btn {
+            background: url("../media/icn/icn-back.svg");
+            display: block;
+            width: 20px;
+            height: 32px;
+            margin-top: 13px;
+            background-repeat: no-repeat;
+            background-size: 20px 32px;
+            background-origin: padding-box
+        }
+
+        .pagination li a {
+            color: #c1c1c1
+        }
+
+        .pagination li.disabled a {
+            color: #3a3939
+        }
+
+        .pagination li.active {
+            background-color: #01542e
+        }
+
+        .select-tab.disabled {
+            border: 3px solid rgb(255, 0, 0)
+        }
+
+        .number-tab {
+            width: 97%;
+            padding: 5px;
+            border: 3px solid #eee;
+            border-radius: 5px;
+            margin: auto;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 0.75rem;
+            position: relative;
+            cursor: pointer
+        }
+
+        .picker__list-item small {
+            float: right;
+        }
+
+        .picker__list-item small .badge {
+            font-size: 100%;
+        }
+
+        .center {
+            text-align: center;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+        }
+
+        .centernumber {
+            width: 150px;
+            padding: 5px;
+            border: 0px solid #eee;
+            border-radius: 5px;
+            margin: auto;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 0.75rem;
+            position: relative;
+            cursor: pointer
+        }
+    </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <title>Loading</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <!-- FOR TRANSLATION PURPOSES -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/js/i18n/CLDRPluralRuleParser.js"></script>
+    <script src="/js/i18n/jquery.i18n.js"></script>
+    <script src="/js/i18n/jquery.i18n.messagestore.js"></script>
+    <script src="/js/i18n/jquery.i18n.fallbacks.js"></script>
+    <script src="/js/i18n/jquery.i18n.language.js"></script>
+    <script src="/js/i18n/jquery.i18n.parser.js"></script>
+    <script src="/js/i18n/jquery.i18n.emitter.js"></script>
+    <script src="/js/i18n/jquery.i18n.emitter.bidi.js"></script>
+    <script>
+        // =======================
+        // TRANSLATIONS RELATED
+        // =======================
+        jquery351 = jQuery.noConflict(true);
+
+        function ReloadTranslation(language) {
+            let queryObject = GetQueryObject();
+            let lang = queryObject.language;
+            console.log('TRANSLATING to: ', lang)
+            // Default in case it's not there
+            if (!lang){
+                lang = 'en'
+            }
+            
+            jquery351(function ($) {
+                $.i18n({
+                    locale: lang,
+                })
+                    .load({
+                        en: `https://${window.location.hostname}/js/i18n/languages/en.json`,
+                        th: `https://${window.location.hostname}/js/i18n/languages/th.json`,
+                    })
+                    .done(function () {
+                        $('html').i18n();
+                    });
+            });
+        }
+    </script>
+
+    <!-- BOOTSTRAP -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
+          integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+            integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+            crossorigin="anonymous"></script>
+
+
+    <!-- LINE -->
+    <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
+    <!-- Sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="/js/services/receipt_table.js"></script>
+</head>
+
+<body id="body">
+<!-- Generic Script -->
+<script src="/js/utils/generic_script.js"></script>
+
+<script>
+
+    let jsonObjectReturn = ""
+
+    /*Called upon HTML loading */
+    window.onload = async function () {
+        liff.init(
+            data => {
+                const userId = data.context.userId;
+            },
+            err => {
+            }
+        );
+        console.log("WINDOW ONLOAD");
+
+        let queryObject = GetQueryObject();
+
+        if (queryObject.isRewards){
+            await GetRewardsJSON();
+        }
+        else {
+            await GetItemsFromDatabase();
+        }
+
+        ReloadTranslation();
+    };
+
+    /*Cleans the query input*/
+    function get(name) {
+        if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(location.search))
+            return decodeURIComponent(name[1]);
+    }
+
+    async function GetRewardsJSON() {
+        console.log('GetRewardsJSON')
+        let queryObject = GetQueryObject();
+
+        let values = {
+            queryObject,
+            promoid: queryObject.promoid,
+            mechanicsid: queryObject.mechanicsid,
+            itemid: queryObject.itemid
+        };
+        // webinterface/command
+        let fetchResponse = await fetch('/web/select_item/getrewards', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(values),
+        })
+            .then((response) => response.json())
+            .catch((error) => {
+                console.log('');
+                console.log('FETCH ERROR');
+                console.log(error);
+            });
+        await DisplayResult(fetchResponse.databaseResult, fetchResponse.operationType);
+    }
+
+    async function GetItemsFromDatabase() {
+        let queryObject = GetQueryObject();
+        let values = {
+            queryObject
+        };
+
+        let { operationType } = queryObject;
+        if (operationType == "modify")
+        {
+            values.itemhash = queryObject.itemhash;
+        }
+        else
+        {
+            values.itemhash = '';
+        }
+            
+        console.log("VALUES:", JSON.stringify(values));
+        console.log("Getting items from database ROUTE: /getjson");
+
+        let fetchResponse = await fetch('/web/select_item/getjson', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(values),
+        })
+            .then((response) => response.json())
+            .catch((error) => {
+                console.log('');
+                console.log('FETCH ERROR');
+                console.log(error);
+            });
+
+            await DisplayResult(fetchResponse.databaseResult, fetchResponse.operationType);
+    }
+
+    async function DisplayResult(jsonObject, operationType) {
+        jsonObjectReturn = jsonObject;
+        document.body.style.background = jsonObject.bgcolor;
+        var root = document.documentElement;
+        root.style.setProperty('--modalbgcolor', jsonObject.bgcolor);
+        var fontcolor = jsonObject.textcolor;
+        root.style.setProperty('--fontcolor', jsonObject.textcolor);
+        var button_bgcolor = jsonObject.button_bgcolor;
+        root.style.setProperty('--button_bgcolor', button_bgcolor);
+        var buttonlabel = "";
+        var buttoni18n = "";
+
+        if (operationType == "modify") {
+            document.title = "Modify Item";
+            buttonlabel = "Modify Item";
+            buttoni18n = "btn_ModifyItem";
+        }
+        else if (operationType === 'rewards'){
+            document.title = "Choose Reward";
+            buttonlabel = "Add to Cart";
+            buttoni18n = "btn_AddToCart";
+        }
+        else {
+            document.title = "Add Item";
+            buttonlabel = "Add to Cart";
+            buttoni18n = "btn_AddToCart";
+        }
+
+        console.log(jsonObject)
+        var item_name = jsonObject.item_name;
+        var item_id = jsonObject.item_id;
+        var currency = jsonObject.currency;
+        var decimal =  jsonObject.decimal;
+        var item_price = jsonObject.item_price;
+        var quantity_max = jsonObject.quantity_max;
+        var quantity_min = jsonObject.quantity_min;
+        var quantity_value = jsonObject.quantity_value;
+        var item_image_url = jsonObject.item_image_url;
+        var button_textcolor = jsonObject.button_textcolor;
+
+        document.getElementById("pagecontent").innerHTML = "<div id='dataarea'></div>";
+        document.getElementById("dataarea").innerHTML = "";
+        var header = '';
+        header += 
+            '<div class="col-xs-12 col-md-12 col-lg-12 m-0 p-0 text-center" id="box' + item_id + '">' +
+                '<h4 style="color:' + fontcolor + ';">' + item_name + '</h4' +
+                '<div class="col-5">' +
+                    '<div class="select-tab" style="height: fit-content; width: fit-content; box-shadow: none;">' +
+                        '<span class="item-price">' + item_price + ' ' + currency + '</span>' +
+                        '<img class="img-circle" style="width: 110px; height: 80px;" src="' + item_image_url + '"/>' +
+                        '<p class="no-margin" style="font-size:14px; color:' + fontcolor + '" data-i18n="label_Quantity">Quantity</p>';
+        header +=
+            '<div class="col-xs-12 col-md-12 col-lg-12" style="padding:0;">' +
+                '<div class="centernumber">' +
+                    '<div class="input-group">' +
+                        '<span class="input-group-btn">' +
+                            '<button type="button" class="btn btn-danger btn-number" data-type="minus" data-min="'+quantity_min+'" data-field="numbergroup=0&id=Item&groupname=Item">' +
+                                '<span class="glyphicon glyphicon-minus"></span>' +
+                            '</button>' +
+                        '</span>' +
+                        '<input type="text" disabled="true" id=' + item_id + ' name="numbergroup=0&id=Item&groupname=Item" class="form-control input-number" style="text-align:center" min=' + quantity_min + ' value=' + quantity_value + ' max=' + quantity_max + '>' +
+                        '<span class="input-group-btn">' +
+                            '<button type="button" class="btn btn-success btn-number" data-type="plus" data-max="'+quantity_max+'" data-field="numbergroup=0&id=Item&groupname=Item">' +
+                                '<span class="glyphicon glyphicon-plus"></span>' +
+                            '</button>' +
+                        '</span>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
+        header += '</div></div><div class="col-xs-3 col-md-3 col-lg-3">';
+
+        document.getElementById("dataarea").insertAdjacentHTML('beforeend', header);
+
+        var grouplimitmax = [];
+        var currentgrpval = [];
+
+        // initalize item (array[0]) values
+        grouplimitmax[0] = quantity_max;
+        currentgrpval[0] = quantity_value;
+
+        if (jsonObject.option_group) {
+            for (var ix = 0; ix < jsonObject.option_group.length; ix++) {
+                var optGroup = jsonObject.option_group[ix];
+                console.log("Option Group:",optGroup);
+                var thisgroupid = optGroup.option_group_id;
+                grouplimitmax[thisgroupid] = optGroup.max;
+                currentgrpval[thisgroupid] = 0;
+                if (optGroup.is_hidden == true) continue;
+
+                var groupname = optGroup.option_group_name;
+                var groupRange = getGroupRange(optGroup);
+                var elements =
+                    '<div class="col-xs-12 col-md-12 col-lg-12" style="padding:0;">' +
+                        '<b style="color:' + fontcolor + '">' + groupname + groupRange + '</b>' +
+                    '</div>' +
+                    '<table class="table" style="margin:0;">' +
+                        '<tbody id="tablebody' + thisgroupid + '"></tbody>' +
+                    '</table>';
+
+                document.getElementById("dataarea").insertAdjacentHTML('beforeend', elements);
+
+                for (var c = 0; c < optGroup.option.length; c++) {
+
+                    var optItem = optGroup.option[c]
+                    var name = optItem.option_name;
+                    var price = optItem.price;
+                    var elements = "";
+                    var buttonid = optItem.option_gui_id;
+                    var imgclass = "";
+                    var subborder = "";
+                    var activeval = optItem.value
+
+                    var pricestring = (price > 0) ? price + " " + currency : "";
+                    if (optItem.is_hidden == true) continue;
+
+                    imgclass = ` class="img-circle" `;
+                    subborder = (optItem.suboption_group) ? " border:2px dotted gray; " : "";
+
+                    var crustclass = "style='width: 70px; height: 70px; "+subborder+"'";
+                    if (optItem.imageURL != null && optItem.imageURL != "") var imgurl = optItem.imageURL;
+                    else {
+                        var imgurl = "/assets/blank.png";
+                        crustclass = "style='width: 20px; height: 20px; font-size:16px;'";
+                    }
+
+                    var extraprice = "";
+                    if (price > 0) extraprice = "<span class='extra-price'>+" + price + " " + currency + "</span>";
+                    if (price < 0) extraprice = "<span class='extra-price'>-" + price + " " + currency + "</span>";
+
+                    var activeclass = (activeval == 1) ? "active" : "";
+
+                    currentgrpval[thisgroupid] += optItem.value;
+
+                    // checkbox style
+                    if (optItem.max == 1) {
+                        var selection = "<div class='select-tab " + activeclass + "' style='height: 115px;' id='" + buttonid + "' data-groupname='" + groupname + "' name='optradio_" + thisgroupid + "' value=" + activeval + " > <span class='checked-icn'><img src='/assets/icn-check.svg' alt=''></span> " + extraprice + " <img '" + imgclass + "' src='" + imgurl + "' " + crustclass + " /><br><p class='no-margin' style='font-size:12px;color:" + fontcolor + ";'>" + name + "</p> </div>";
+                        elements = "<div class='col-xs-4 col-md-4 col-lg-3' id='box" + buttonid + "' style='padding:0;' >" + selection + "</div>";
+                    }
+                    // plus / minus buttons
+                    else if (optItem.max > 1) {
+                        crustclass = "style='width: 75px; height: 75px; "+subborder+"'";
+                        var selection = "<div class='select-tab' style='height: 165px;'> <span class='checked-icn'><img src='/assets/icn-check.svg' alt=''></span> " + extraprice + " <img  id='" + buttonid + "' " + imgclass + "' src='" + imgurl + "' " + crustclass + " /> <p class='no-margin' style='font-size:12px;'>" + name + "</p>";
+                        selection +=
+                            '<div class="centernumber">' +
+                            '<div class="input-group">';
+                        if (optItem.max != optItem.min) {
+                            selection +=
+                                '<span class="input-group-btn">' +
+                                '<button type="button" class="btn btn-danger btn-number" style="z-index:9;" data-type="minus" data-min="'+ optItem.min +'" data-field="numbergroup=' + thisgroupid + '&id=' + buttonid + '&groupname=' + groupname + '"">' +
+                                '<span class="glyphicon glyphicon-minus"></span>' +
+                                '</button>' +
+                                '</span>';
+                        }
+                        selection +=
+                            '<input type="text" disabled="true" id=' + buttonid + ' name="numbergroup=' + thisgroupid + '&id=' + buttonid + '&groupname=' + groupname + '"" value=' + optItem.value + ' class="form-control input-number" style="text-align:center" min="' + optItem.min + '"  max="' + optItem.max + '">';
+                        if (optItem.max != optItem.min) {
+                            selection +=
+                                '<span class="input-group-btn">' +
+                                '<button type="button" class="btn btn-success btn-number" style="z-index:9;" data-type="plus" data-max="'+ optItem.max +'" data-field="numbergroup=' + thisgroupid + '&id=' + buttonid + '&groupname=' + groupname + '"">' +
+                                '<span class="glyphicon glyphicon-plus"></span>' +
+                                '</button>' +
+                                '</span>';
+                        }
+                        selection += '</div></div></div>';
+                        elements = "<div class='col-xs-6 col-md-4 col-lg-3' id='box" + buttonid + "' style='padding:0;' >" + selection + "</div>";
+                    }
+                    document.getElementById("tablebody" + thisgroupid).insertAdjacentHTML('beforeend', elements);
+
+                    if (optItem.suboption_group) {
+                        for (i = 0; i < optItem.suboption_group.length; i++) {
+                            var suboptiondata = optItem.suboption_group[i];
+                            var subgroupid = suboptiondata.suboption_group_gui_id;
+                            var groupname = suboptiondata.suboption_group_name;
+                            var groupmaxqty = suboptiondata.max; 
+                            var groupminqty = suboptiondata.min;
+                            var groupRange = getGroupRange(suboptiondata);
+                            var elements;
+
+                            grouplimitmax[subgroupid] = suboptiondata.max;
+                            currentgrpval[subgroupid] = 0;
+                            if (suboptiondata.is_hidden == true) continue;
+
+                            if (i == 0) {
+                                elements = `
+                                <div id="subtable${buttonid}" class="modal" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title"style="color:${fontcolor}">${name}</h5>
+                                            </div>
+                                        <div class="modal-body">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <h5 style="color:${fontcolor}">${groupname}${groupRange}</h5> `;
+                            }
+                            else {
+                                elements += `</div></div>
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <h5 style="color:${fontcolor}">${groupname}${groupRange}</h5> `;
+                            }
+
+                            for (x = 0; x < suboptiondata.suboption.length; x++) {
+
+                                var suboptionrow = suboptiondata.suboption[x]
+                                var name = suboptionrow.suboption_name;
+                                var price = suboptionrow.price;
+                                var subbuttonid = suboptionrow.suboption_gui_id;
+                                var imgclass = "";
+                                var activeval = suboptionrow.value
+                                if (suboptionrow.is_hidden == true) continue;
+
+                                imgclass = ` class="img-circle" `
+                                var crustclass = "style='width: 70px; height: 70px;'";
+                                if (suboptionrow.imageURL != null && suboptionrow.imageURLl != "") var imgurl = suboptionrow.imageURL;
+                                else {
+                                    var imgurl = "/assets/blank.png";
+                                    crustclass = "style='width: 20px; height: 20px; font-size:16px;'";
+                                }
+
+                                var pricestring = (price > 0) ? price + " " + currency : "";
+
+                                var extraprice = "";
+                                if (price > 0) var extraprice = "<span class='extra-price'>+" + price + " " + currency + "</span>";
+                                if (price < 0) var extraprice = "<span class='extra-price'>" + price + " " + currency + "</span>";
+
+                                var activeclass = (activeval == 1) ? "active" : "";
+
+                                currentgrpval[subgroupid] += suboptionrow.value;
+
+                                if (suboptionrow.max == 1) {
+                                    var selection = "<div class='select-tab " + activeclass + "' style='height: 115px;' id='" + subbuttonid + "' data-groupname='" + groupname + "' name='optradio_" + subgroupid + "' value=" + activeval + "  > <span class='checked-icn'><img src='/assets/icn-check.svg' alt=''></span> " + extraprice + " <img '" + imgclass + "' src='" + imgurl + "' " + crustclass + " /><br><p class='no-margin' style='font-size:12px;color:" + fontcolor + ";'>" + name + "</p> </div>";
+                                    elements += `<div class='col-xs-4 col-md-4 col-lg-3' id='box${subbuttonid}' style='padding:0;' >${selection}</div>`;
+                                }
+                                else if (suboptionrow.max > 1) {
+                                    crustclass = "style='width: 75px; height: 75px;'";
+                                    var selection = "<div class='select-tab' style='height: 165px;'> <span class='checked-icn'><img src='/assets/icn-check.svg' alt=''></span> " + extraprice + " <img  '" + imgclass + "' src='" + imgurl + "' " + crustclass + " /> <p class='no-margin' style='font-size:12px;height:30px' >" + name + "</p>";
+                                    selection +=
+                                        '<div class="centernumber">' +
+                                            '<div class="input-group">' +
+                                                '<span class="input-group-btn">' +
+                                                    '<button type="button" class="btn btn-danger btn-number" data-type="minus" data-field="numbergroup=' + subgroupid + '&id=' + subbuttonid + '&groupname=' + groupname + '"  data-min="' + suboptionrow.min + '"  data-max="' + suboptionrow.max + '">' +
+                                                        '<span class="glyphicon glyphicon-minus"></span>' +
+                                                    '</button>' +
+                                                '</span>' +
+                                                '<input type="text" id=' + subbuttonid + ' disabled="true" name="numbergroup=' + subgroupid + '&id=' + subbuttonid + '&groupname=' + groupname + '" value="' + suboptionrow.value + '" class="form-control input-number" style="text-align:center" min="' + suboptionrow.min + '"  max="' + suboptionrow.max + '" > ' +
+                                                '<span class="input-group-btn">' +
+                                                    '<button type="button" class="btn btn-success btn-number" data-type="plus" data-field="numbergroup=' + subgroupid + '&id=' + subbuttonid + '&groupname=' + groupname + '"  data-min="' + suboptionrow.min + '"  data-max="' + suboptionrow.max + '">' +
+                                                        '<span class="glyphicon glyphicon-plus"></span>' +
+                                                    '</button>' +
+                                                '</span>' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div>'
+                                    elements += `<div class='col-xs-6 col-md-4 col-lg-3' id='box${subbuttonid}' style='padding:0;'>${selection}</div>`;
+                                }
+                                // action events
+                                if (suboptionrow.max == 1) {
+                                    // action event for suboptions (RADIO)
+                                    if (suboptiondata.max == 1) {
+                                        $(document).on("click", "#" + subbuttonid, function (event) {
+                                            var groupname = this.getAttribute('name');
+                                            var choicegroups = document.getElementsByName(groupname);
+                                            var optiongroupid = groupname.replace("optradio_", "");
+                                            var newval;
+
+                                            for (i = 0; i < jsonObject.option_group.length; i++) {
+                                                for (c = 0; c < jsonObject.option_group[i].option.length; c++) {
+                                                    if (jsonObject.option_group[i].option[c].suboption_group) {
+                                                        for (x = 0; x < jsonObject.option_group[i].option[c].suboption_group.length; x++) {
+                                                            for (y = 0; y < jsonObject.option_group[i].option[c].suboption_group[x].suboption.length; y++) {
+                                                                if (jsonObject.option_group[i].option[c].suboption_group[x].suboption_group_gui_id == optiongroupid) {
+                                                                    if (jsonObject.option_group[i].option[c].suboption_group[x].suboption[y].suboption_gui_id == this.id) {
+                                                                        newval = (jsonObject.option_group[i].option[c].suboption_group[x].suboption[y].value == 1 ? 0 : 1);
+                                                                        jsonObject.option_group[i].option[c].suboption_group[x].suboption[y].value = newval;
+                                                                        jsonObjectReturn = jsonObject;
+                                                                    }
+                                                                    else {
+                                                                        jsonObject.option_group[i].option[c].suboption_group[x].suboption[y].value = 0;
+                                                                        jsonObjectReturn = jsonObject;
+                                                                    }   
+                                                                }
+
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            computeTotalPrice(jsonObjectReturn);
+                                            for (var i = 0; i < choicegroups.length; i++) {
+                                                var subtableid = "#subtable" + choicegroups[i].id
+                                                if (choicegroups[i].id == this.id) {
+                                                    if (newval == 0) {
+                                                        choicegroups[i].className = "select-tab";
+                                                        choicegroups[i].setAttribute('value', 0);
+                                                    }
+                                                    else if (newval == 1) {
+                                                        choicegroups[i].className = "select-tab active";
+                                                        choicegroups[i].setAttribute('value', 1);
+                                                    }
+                                                }
+                                                else {
+                                                    choicegroups[i].className = "select-tab";
+                                                    choicegroups[i].setAttribute('value', 0);
+                                                }
+                                            }
+                                        });
+                                    }
+                                    // action event for suboptions (CHECK)
+                                    else if (suboptiondata.max > 1) {
+                                        $(document).on("click", "#" + subbuttonid, function (event) {
+                                            var groupname = this.getAttribute('data-groupname');
+                                            var optionlabel = this.getAttribute('name');
+                                            var optiongroupid = optionlabel.replace("optradio_", "");
+                                            var choicegroups = document.getElementsByName(optionlabel);
+                                            var newval;
+
+                                            for (i = 0; i < jsonObject.option_group.length; i++) {
+                                                for (c = 0; c < jsonObject.option_group[i].option.length; c++) {
+                                                    if (jsonObject.option_group[i].option[c].suboption_group) {
+                                                        for (x = 0; x < jsonObject.option_group[i].option[c].suboption_group.length; x++) {
+                                                            for (y = 0; y < jsonObject.option_group[i].option[c].suboption_group[x].suboption.length; y++) {
+                                                                if (jsonObject.option_group[i].option[c].suboption_group[x].suboption_group_gui_id == optiongroupid) {
+                                                                    if (jsonObject.option_group[i].option[c].suboption_group[x].suboption[y].suboption_gui_id == this.id) {
+                                                                        newval = (jsonObject.option_group[i].option[c].suboption_group[x].suboption[y].value == 1 ? 0 : 1);
+                                                                        switch (newval) {
+                                                                            case 0:
+                                                                                jsonObject.option_group[i].option[c].suboption_group[x].suboption[y].value = newval;
+                                                                                currentgrpval[optiongroupid] -= 1;
+                                                                                break;
+                                                                            case 1:
+                                                                                if (currentgrpval[optiongroupid] < grouplimitmax[optiongroupid]) {
+                                                                                    jsonObject.option_group[i].option[c].suboption_group[x].suboption[y].value = newval;
+                                                                                    currentgrpval[optiongroupid] += 1;
+                                                                                }
+                                                                                else {
+                                                                                    newval = 0;
+                                                                                    Swal.fire({
+                                                                                        title: "You've reached the limit for " + groupname,
+                                                                                        icon: "info"
+                                                                                    });
+                                                                                }
+                                                                                break;
+                                                                            default:
+                                                                        }
+                                                                        jsonObjectReturn = jsonObject;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            computeTotalPrice(jsonObjectReturn);
+                                            for (var i = 0; i < choicegroups.length; i++) {
+                                                var subtableid = "#subtable" + choicegroups[i].id
+                                                if (choicegroups[i].id == this.id) {
+                                                    if (newval == 0) {
+                                                        choicegroups[i].className = "select-tab";
+                                                        choicegroups[i].setAttribute('value', 0);
+                                                    }
+                                                    else if (newval == 1) {
+                                                        choicegroups[i].className = "select-tab active";
+                                                        choicegroups[i].setAttribute('value', 1);
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    }
+
+
+                                    /*
+                                     $('#'+subbuttonid).on('click', function () {
+                                     console.log("test")
+                                     var groupname = this.getAttribute('name');
+                                     var choicegroups = document.getElementsByName(groupname);
+                                     var optiongroupid = groupname.replace("optradio_","");
+
+
+                                     for(i=0;i<jsonObject.option_group.length;i++){
+                                     for(c=0;c<jsonObject.option_group[i].option.length;c++){
+                                     if(jsonObject.option_group[i].option[c].suboption_group){
+                                     for(x=0;x<jsonObject.option_group[i].option[c].suboption_group.length;x++){
+                                     for(y=0;y<jsonObject.option_group[i].option[c].suboption_group[x].suboption.length;y++){
+
+                                     if(jsonObject.option_group[i].option[c].suboption_group[x].suboption[y].suboption_id == this.id && jsonObject.option_group[i].option[c].suboption_group[x].suboption_group_id == optiongroupid){
+                                     jsonObject.option_group[i].option[c].suboption_group[x].suboption[y].value = 1
+                                     jsonObjectReturn = jsonObject
+
+
+                                     }
+                                     else if(jsonObject.option_group[i].option[c].suboption_group[x].suboption[y].suboption_id != this.id && jsonObject.option_group[i].option[c].suboption_group[x].suboption_group_id == optiongroupid){
+                                     jsonObject.option_group[i].option[c].suboption_group[x].suboption[y].value = 0
+                                     jsonObjectReturn = jsonObject
+
+                                     }
+
+                                     }
+                                     }
+                                     }
+                                     }
+                                     }
+
+                                     for(var i=0;i<choicegroups.length;i++){
+                                     if(choicegroups[i].id==this.id){
+
+                                     choicegroups[i].className = "select-tab active";
+                                     choicegroups[i].setAttribute('value',1);
+                                     }
+                                     else{
+                                     choicegroups[i].className = "select-tab";
+                                     choicegroups[i].setAttribute('value',0);
+                                     }
+                                     }
+                                     });
+                                     */
+                                }
+                            }
+
+                            if (i == optItem.suboption_group.length - 1) {
+                                elements += `</div></div></div><div class=modal-footer><button type='button' data-dismiss='modal' class='btn-block' 
+                                            style='color:#ffffff;height:50px;background-color:${button_bgcolor};border-color:${button_bgcolor};z-index:10' 
+                                            data-i18n='btn_Confirm'>Confirm</button></div>`
+                                document.getElementById("dataarea").insertAdjacentHTML('beforeend', elements);
+                            }
+                        }
+                    }
+
+                    // action events
+                    if (optItem.max == 1) {
+                        //action event for options (RADIO)
+                        if (optGroup.max == 1) {
+                            $('#' + buttonid).on('click', function () {
+                                var optionlabel = this.getAttribute('name');
+                                var optiongroupid = optionlabel.replace("optradio_", "");
+                                var choicegroups = document.getElementsByName(optionlabel);
+                                var newval;
+
+                                for (i = 0; i < jsonObject.option_group.length; i++) {
+                                    for (c = 0; c < jsonObject.option_group[i].option.length; c++) {
+                                        if (jsonObject.option_group[i].option_group_id == optiongroupid) {
+                                            if (jsonObject.option_group[i].option[c].option_gui_id == this.id) {
+                                                if (jsonObject.option_group[i].option[c].value == jsonObject.option_group[i].option[c].min) {
+                                                    jsonObject.option_group[i].option[c].value = parseInt(jsonObject.option_group[i].option[c].max);
+                                                    newval = jsonObject.option_group[i].option[c].max;
+                                                } else {
+                                                    jsonObject.option_group[i].option[c].value = parseInt(jsonObject.option_group[i].option[c].min);
+                                                    newval = jsonObject.option_group[i].option[c].min;
+                                                }
+                                                
+                                                jsonObjectReturn = jsonObject;
+                                            }
+                                            else {
+                                                jsonObject.option_group[i].option[c].value = 0;
+                                                jsonObjectReturn = jsonObject;
+                                            }
+                                        }
+                                    }
+                                }
+                                computeTotalPrice(jsonObjectReturn);
+                                for (var i = 0; i < choicegroups.length; i++) {
+                                    var subtableid = "#subtable" + choicegroups[i].id;
+
+                                    if (choicegroups[i].id == this.id) {
+                                        if (newval == 0) {
+                                            choicegroups[i].className = "select-tab";
+                                            choicegroups[i].setAttribute('value', 0);
+                                        }
+                                        else if (newval == 1) {
+                                            choicegroups[i].className = "select-tab active";
+                                            choicegroups[i].setAttribute('value', 1);
+                                            $(subtableid).modal('show');
+                                        }
+                                    }
+                                    else {
+                                        choicegroups[i].className = "select-tab";
+                                        choicegroups[i].setAttribute('value', 0);
+                                    }
+                                }
+                            });
+                        }
+                        //action event for options (CHECK)
+                        else if (optGroup.max > 1) {
+                            $('#' + buttonid).on('click', function () {
+                                var groupname = this.getAttribute('data-groupname');
+                                var optionlabel = this.getAttribute('name');
+                                var optiongroupid = optionlabel.replace("optradio_", "");
+                                var choicegroups = document.getElementsByName(optionlabel);
+                                var newval;
+
+                                for (i = 0; i < jsonObject.option_group.length; i++) {
+                                    for (c = 0; c < jsonObject.option_group[i].option.length; c++) {
+                                        if (jsonObject.option_group[i].option_group_id == optiongroupid) {
+                                            if (jsonObject.option_group[i].option[c].option_gui_id == this.id) {
+                                                if (jsonObject.option_group[i].option[c].value == jsonObject.option_group[i].option[c].min) {
+                                                    if (currentgrpval[optiongroupid] < grouplimitmax[optiongroupid]) {                                                       
+                                                        jsonObject.option_group[i].option[c].value = parseInt(jsonObject.option_group[i].option[c].max);
+                                                        currentgrpval[optiongroupid] += jsonObject.option_group[i].option[c].max;
+                                                        newval = jsonObject.option_group[i].option[c].max;
+                                                    }
+                                                    else {
+                                                        Swal.fire({
+                                                            title: "You've reached the limit for " + groupname,
+                                                            icon: "info"
+                                                        });
+                                                    }
+                                                }
+                                                else {
+                                                    jsonObject.option_group[i].option[c].value = jsonObject.option_group[i].option[c].min;
+                                                    newval = jsonObject.option_group[i].option[c].min;
+                                                    currentgrpval[optiongroupid] -= jsonObject.option_group[i].option[c].max;
+                                                }
+                                                jsonObjectReturn = jsonObject
+                                            }
+                                        }
+                                    }
+                                }
+                                computeTotalPrice(jsonObjectReturn);
+
+                                for (var i = 0; i < choicegroups.length; i++) {
+                                    var subtableid = "#subtable" + choicegroups[i].id
+                                    if (choicegroups[i].id == this.id) {
+                                        if (newval == 0) {
+                                            choicegroups[i].className = "select-tab";
+                                            choicegroups[i].setAttribute('value', 0);
+                                        }
+                                        else if (newval == 1) {
+                                            choicegroups[i].className = "select-tab active";
+                                            choicegroups[i].setAttribute('value', 1);
+                                            $(subtableid).modal('show');
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }
+                    //action event for items (+/-)
+                    else if (optItem.max > 1) {
+                        $('#' + buttonid).on('click', function () {
+                            var subtableid = "#subtable" + this.id;
+                            $(subtableid).modal('show');
+                        });
+                    }
+                }
+            }
+        }
+
+        function getGroupRange(optGroup) {
+            let retVal = '';
+            if (optGroup.min != optGroup.max) {
+                retVal = ' (Min: ' + optGroup.min + ' | Max: ' + optGroup.max + ')';
+            }
+            else {
+                retVal = ' (' + optGroup.min + ')';
+            }
+            return retVal;
+        }
+
+        function computeTotalPrice(jsonPrice) {
+            var totalPrice = 0;
+            var addonPrice = 0;
+            var itemQuantity = jsonPrice.quantity_value;
+            var itemPrice = jsonPrice.item_price;
+            if (jsonPrice.option_group) {
+                for (i = 0; i < jsonPrice.option_group.length; i++) {
+                    for (c = 0; c < jsonPrice.option_group[i].option.length; c++) {
+                        if (jsonPrice.option_group[i].option[c].value >= 1 && jsonObject.option_group[i].option[c].price) {
+                            addonPrice += jsonObject.option_group[i].option[c].value * jsonObject.option_group[i].option[c].price;
+                        }
+                        if (jsonPrice.option_group[i].option[c].suboption_group) {
+                            let optQuantity = jsonPrice.option_group[i].option[c].value;
+                            for (x = 0; x < jsonPrice.option_group[i].option[c].suboption_group.length; x++) {
+                                for (y = 0; y < jsonPrice.option_group[i].option[c].suboption_group[x].suboption.length; y++) {
+                                    if (jsonPrice.option_group[i].option[c].suboption_group[x].suboption[y].value >= 1 && jsonPrice.option_group[i].option[c].value >= 1) {
+                                        addonPrice += jsonPrice.option_group[i].option[c].suboption_group[x].suboption[y].value * 
+                                                      jsonPrice.option_group[i].option[c].suboption_group[x].suboption[y].price *
+                                                      optQuantity;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            var totalPrice = (itemPrice + addonPrice) * itemQuantity;
+            var buttontext = buttonlabel.toUpperCase() + " (" + currencyFormat(totalPrice,decimal) + " " + currency + ")";
+            //replaceButtonText("addbutton", buttontext);
+        }
+
+        var addbut = `
+        <div style='height:50px'>
+            <button type='button' value='add' id='addbutton' class='btn-block'
+            style="position:fixed;bottom:0px;height:inherit;z-index:10;
+            font-size:larger;font-weight:bold;
+            color:${button_textcolor};background-color:${button_bgcolor};border-color:${button_bgcolor};"
+            data-i18n='${buttoni18n}'>
+                ${buttonlabel.toUpperCase()}
+            </button>
+        </div>`;
+        document.getElementById("pagecontent").insertAdjacentHTML('beforeend', addbut);
+        computeTotalPrice(jsonObject)
+
+        var objaddbutton = document.getElementById("addbutton");
+        objaddbutton.addEventListener('click', function (e) {
+            var isMin = 1;
+            if (jsonObjectReturn.option_group) {
+                for (i = 0; i < jsonObjectReturn.option_group.length; i++) {
+                    let min = jsonObjectReturn.option_group[i].min;
+                    let currentoptionval = 0;
+                    for (c = 0; c < jsonObjectReturn.option_group[i].option.length; c++) {
+                        currentoptionval += parseInt(jsonObjectReturn.option_group[i].option[c].value);
+                        /*
+                         if(jsonObjectReturn.option_group[i].option[c].suboption_group){
+
+                         for(x=0;x<jsonObjectReturn.option_group[i].option[c].suboption_group.length;x++){
+                         for(y=0;y<jsonObjectReturn.option_group[i].option[c].suboption_group[x].suboption.length;y++){
+
+                         }
+                         }
+                         }
+                         */
+                    }
+                    if (currentoptionval < min) {
+                        isMin = 0
+                        //alert("Minimum value for "+jsonObjectReturn.option_group[i].option_group_name+" is "+jsonObjectReturn.option_group[i].min);
+                        Swal.fire({
+                            title: 'Please make a selection for ' + jsonObjectReturn.option_group[i].option_group_name,
+                            icon: 'info'
+                        })
+                        console.log("ERROR")
+                        break;
+                    }
+                }
+            }
+            if (isMin == 1) {
+                let queryObject = GetQueryObject();
+                if (queryObject.isRewards){
+                    // Rewards behavior
+                    // Separated to make it look cleaner
+                    
+                    // If not, POST to the backend
+                    let queryObject = GetQueryObject();
+                    let values = {
+                        queryObject,
+                        jsondata: jsonObjectReturn,
+                        promoid: queryObject.promoid,
+                        mechanicsid: queryObject.mechanicsid,
+                        itemid: queryObject.itemid
+                    };
+
+                    fetch('select_item/saverewards', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(values),
+                        })
+                        .then((response) => response.json())
+                        .then((response) => {
+                            if (response.status === 'success'){
+                                document.getElementById("addbutton").disabled = true;
+                                document.getElementById("addbutton").innerHTML = "<a class='fa fa-spinner fa-spin'></a>";
+                                
+                                window.shouldClose = true;
+                                window.close();
+                                window.location.href = "/webpages/closing.html"
+                                liff.closeWindow();
+                            }
+                            else if (response.status === 'redirect'){
+                                window.location.href = response.url
+                            }
+                            else if (response.status === 'error'){
+                                DisplaySweetAlertError(response.message)
+                            }
+                            else {
+                                console.log(response);
+                                DisplaySweetAlertInfo('Unhandled response!')
+                            }
+                        })
+                        .catch((e) => {
+                            console.error(e);
+                        });
+                }
+                // NORMAL ITEM BEHAVIOR
+                else {
+                    document.getElementById("addbutton").disabled = true;
+                    document.getElementById("addbutton").innerHTML = "<a class='fa fa-spinner fa-spin'></a>";
+
+                    if (jsonObjectReturn === "" || jsonObjectReturn === undefined)
+                    {
+                        alert("jsonObjectReturn IS BLANK");
+                    }
+
+                    let queryObject = GetQueryObject();
+                    let values = {
+                        queryObject,
+                        jsondata: jsonObjectReturn,
+                        itemhash: queryObject.itemhash,
+                        operationType: queryObject.operationType,
+                    };
+
+                    fetch('select_item/savecustomize', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(values),
+                        })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            if (data.status == 'success') {
+                                window.shouldClose = true;
+                                window.close();
+                                window.location.href = '/webpages/closing.html';
+                                liff.closeWindow();
+                            }
+                            // redirect
+                            else {
+                                window.location.href = data.url;
+                            }
+                        })
+                        .catch((e) => {
+                            console.error(e);
+                        });
+                }
+            }
+        }, false);
+
+
+        //event for plus/minus input
+        $('.btn-number').click(function (e) {
+            e.preventDefault();
+
+            fieldName = $(this).attr('data-field');
+            var grpmax = fieldName.split('&')[0].split('=')[1];
+            var groupname = fieldName.split('groupname=')[1];
+            var glimit = grouplimitmax[grpmax];
+
+            console.log("FieldName: ", fieldName);
+
+            console.log("GLMIT1", glimit);
+            console.log("GLMIT2", $(this).attr('data-max'));
+
+            var type = $(this).attr('data-type');
+            var input = $("input[name='" + fieldName + "']");
+
+            console.log("INPUT", input);
+            
+            var currentVal = parseInt(input.val());
+            if (!isNaN(currentVal)) {
+                if (type == 'minus') {
+                    if (currentVal > $(this).attr('data-min')) {
+                        input.val(currentVal - 1).change();
+                        currentgrpval[grpmax] -= 1
+
+                        if (fieldName.search("groupname=Item") >= 0) {
+                            jsonObject.quantity_value = parseInt(input.val())
+                        }
+                        else {
+                            var buttonarr = fieldName.split('&');
+                            var optiongroupid = buttonarr[0].split('=')[1];
+                            var optionid = buttonarr[1].split('=')[1];
+                            for (i = 0; i < jsonObject.option_group.length; i++) {
+                                for (c = 0; c < jsonObject.option_group[i].option.length; c++) {
+                                    if (jsonObject.option_group[i].option[c].option_gui_id == optionid && jsonObject.option_group[i].option_group_id == optiongroupid) {
+                                        jsonObject.option_group[i].option[c].value = parseInt(input.val())
+                                        jsonObjectReturn = jsonObject
+                                    }
+                                }
+                            }
+
+                               //newly added for updating suboptiongroup
+                               for (i = 0; i < jsonObject.option_group.length; i++) {
+                                for (c = 0; c < jsonObject.option_group[i].option.length; c++) {
+                                    if (jsonObject.option_group[i].option[c].suboption_group) {
+                                        for (x = 0; x < jsonObject.option_group[i].option[c].suboption_group.length; x++) {
+                                            for (y = 0; y < jsonObject.option_group[i].option[c].suboption_group[x].suboption.length; y++) {
+                                                if (jsonObject.option_group[i].option[c].suboption_group[x].suboption_group_gui_id == optiongroupid) {
+                                                    if (jsonObject.option_group[i].option[c].suboption_group[x].suboption[y].suboption_gui_id == optionid) {
+                                                        jsonObject.option_group[i].option[c].suboption_group[x].suboption[y].value = parseInt(input.val())
+                                                        jsonObjectReturn = jsonObject;
+                                                    } 
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            //end newly added updating suboptiongroup
+                        }
+                        jsonObjectReturn = jsonObject
+                        computeTotalPrice(jsonObjectReturn);
+                    }
+                    if (parseInt(input.val()) == input.attr('min')) {
+                        $(this).attr('disabled', true);
+                    }
+                } else if (type == 'plus') {
+                    if (currentVal < $(this).attr('data-max') && currentgrpval[grpmax] < glimit) {
+                        input.val(currentVal + 1).change();
+                        currentgrpval[grpmax] += 1
+
+                        if (fieldName.search("groupname=Item") >= 0) {
+                            jsonObject.quantity_value = parseInt(input.val())
+                        }
+                        else {
+                            var buttonarr = fieldName.split('&');
+                            var optiongroupid = buttonarr[0].split('=')[1];
+                            var optionid = buttonarr[1].split('=')[1];
+                            for (i = 0; i < jsonObject.option_group.length; i++) {
+                                for (c = 0; c < jsonObject.option_group[i].option.length; c++) {
+                                    if (jsonObject.option_group[i].option[c].option_gui_id == optionid && jsonObject.option_group[i].option_group_id == optiongroupid) {
+                                        jsonObject.option_group[i].option[c].value = parseInt(input.val())
+                                        jsonObjectReturn = jsonObject
+                                    }
+                                }
+                            }
+                                  //newly added for updating suboptiongroup
+                                  for (i = 0; i < jsonObject.option_group.length; i++) {
+                                for (c = 0; c < jsonObject.option_group[i].option.length; c++) {
+                                    if (jsonObject.option_group[i].option[c].suboption_group) {
+                                        for (x = 0; x < jsonObject.option_group[i].option[c].suboption_group.length; x++) {
+                                            for (y = 0; y < jsonObject.option_group[i].option[c].suboption_group[x].suboption.length; y++) {
+                                                if (jsonObject.option_group[i].option[c].suboption_group[x].suboption_group_gui_id == optiongroupid) {
+                                                    if (jsonObject.option_group[i].option[c].suboption_group[x].suboption[y].suboption_gui_id == optionid) {
+                                                        jsonObject.option_group[i].option[c].suboption_group[x].suboption[y].value = parseInt(input.val())
+                                                        jsonObjectReturn = jsonObject;
+                                                    }
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            //end newly added updating suboptiongroup
+                        }
+                        jsonObjectReturn = jsonObject
+                        computeTotalPrice(jsonObjectReturn);
+                    }
+                    else {
+                        //alert("You've reached the limit for "+groupname);
+                        Swal.fire({
+                            title: "You've reached the limit for " + groupname,
+                            icon: "info"
+                        })
+                    }
+                    if (parseInt(input.val()) == input.attr('max')) {
+                        $(this).attr('disabled', true);
+                    }
+                }
+            } else {
+                console.log("ERROR")
+                input.val(0);
+            }
+        });
+        $('.input-number').focusin(function () {
+            $(this).data('oldValue', $(this).val());
+        });
+        $('.input-number').change(function () {
+
+            minValue = parseInt($(this).attr('min'));
+            maxValue = parseInt($(this).attr('max'));
+            valueCurrent = parseInt($(this).val());
+            name = $(this).attr('name');
+            if (valueCurrent >= minValue) {
+                $(".btn-number[data-type='minus'][data-field='" + name + "']").removeAttr('disabled')
+            } else {
+                Swal.fire({
+                    title: "Sorry, the minimum value was reached",
+                    icon: "info"
+                })
+                //alert('Sorry, the minimum value was reached');
+                $(this).val($(this).data('oldValue'));
+            }
+            if (valueCurrent <= maxValue) {
+                $(".btn-number[data-type='plus'][data-field='" + name + "']").removeAttr('disabled')
+            } else {
+                //alert('Sorry, the maximum value was reached');
+                Swal.fire({
+                    title: "Sorry, the maximum value was reached",
+                    icon: "info"
+                })
+                $(this).val($(this).data('oldValue'));
+            }
+
+
+        });
+        $(".input-number").keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+                // Allow: Ctrl+A
+                (e.keyCode == 65 && e.ctrlKey === true) ||
+                // Allow: home, end, left, right
+                (e.keyCode >= 35 && e.keyCode <= 39)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+
+    }
+
+    function replaceButtonText(buttonId, text) {
+        if (document.getElementById) {
+            var button = document.getElementById(buttonId);
+            if (button) {
+                if (button.childNodes[0]) {
+                    button.childNodes[0].nodeValue = text;
+                }
+                else if (button.value) {
+                    button.value = text;
+                }
+                else //if (button.innerHTML)
+                {
+                    button.innerHTML = text;
+                }
+            }
+        }
+    }
+
+</script>
+    <div id="headercontent">
+    </div>
+    <div id="pagecontent">
+    </div>
+</body>
+</html>

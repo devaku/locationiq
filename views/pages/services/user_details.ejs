@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="<?= language ?>">
+    <head>
+        <?- include('../../layouts/header', {title: title}); ?>
+
+        <!-- Page CSS -->
+        <link rel="stylesheet" href="/css/services/user_details.css" />
+    </head>
+    <body>
+        <?- include('../../layouts/sweet_text'); ?>
+        <code id="ejs-var-preorder-filter" class="hidden">
+            <?= JSON.stringify(preorderFilter) ?>
+        </code>
+        <code id="ejs-var-preorder-required" class="hidden">
+            <?= preorderRequired ?>
+        </code>
+        <div id="main-view" class="">
+            <div class="container zloading-button">
+                <div
+                    class="ejs-var-card-style column-center"
+                    style="
+                        --bgcolor: <?= uiStyle.bgcolor ?>;
+                        --textcolor: <?= uiStyle.textcolor?>;
+                    "
+                >
+                    <!-- Name -->
+                    <!-- If it exists, or if the value is equals to null -->
+                    <? if (formJson['Name'] === null || formJson['Name']) { ?>
+                    <div class="col-md-12">
+                        <div class="field-group">
+                            <label
+                                data-i18n="label_Name"
+                                class="small"
+                                for="name"
+                                style="--bgcolor: <?= uiStyle.bgcolor ?>"
+                            >
+                                Name
+                            </label>
+                            <input
+                                type="text"
+                                name="name"
+                                class="form-inputs"
+                                inputmode="text"
+                                placeholder="Guest"
+                                value="<?= formJson['Name'] ?>"
+                                size="30"
+                                required
+                            />
+                            <input
+                                type="hidden"
+                                id="input-previous-name"
+                                value="<?= formJson['Name'] ?>"
+                            />
+                        </div>
+                    </div>
+                    <? } ?>
+
+                    <!-- EMAIL -->
+                    <!-- If it exists, or if the value is equals to null -->
+                    <? if (formJson['Email'] === null || formJson['Email']) { ?>
+                    <div class="col-md-12">
+                        <div class="field-group">
+                            <label
+                                data-i18n="label_Email"
+                                class="small"
+                                for="Email"
+                                style="--bgcolor: <?= uiStyle.bgcolor ?>"
+                            >
+                                Email</label
+                            >
+                            <input
+                                type="text"
+                                name="Email"
+                                class="form-inputs"
+                                pattern="[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+                                inputmode="email"
+                                placeholder="email@domain.com"
+                                value="<?= formJson['Email'] ?>"
+                                size="20"
+                                required
+                            />
+                            <input
+                                type="hidden"
+                                id="input-previous-email"
+                                value="<?= formJson['Email'] ?>"
+                            />
+                        </div>
+                    </div>
+                    <? } ?>
+
+                    <? if (formJson['Phone'] === null || formJson['Phone']) { ?>
+                    <!-- PHONE -->
+                    <div class="col-md-12">
+                        <div class="field-group">
+                            <!-- pattern="^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.\/0-9]*$" -->
+                            <label
+                                data-i18n="label_Phone"
+                                class="small"
+                                for="Phone"
+                                style="--bgcolor: <?= uiStyle.bgcolor ?>"
+                            >
+                                Phone</label
+                            >
+                            <input
+                                type="tel"
+                                name="Phone"
+                                class="form-inputs"
+                                inputmode="tel"
+                                placeholder="X0123456789"
+                                value="<?= formJson['Phone'] ?>"
+                                minlength="7"
+                                maxlength="15"
+                                size="20"
+                                required
+                            />
+                        </div>
+                    </div>
+                    <? } ?>
+                    <? if (orderMethod === null || orderMethod) { ?>
+                    <!-- ORDER METHOD -->
+                    <hr />
+                    <div class="column-center">
+                        <p>
+                            <span data-i18n="<?= orderMethod ?>">
+                                <?= orderMethod ?>
+                            </span>
+                            <span data-i18n="label_Details"> Details</span>
+                        </p>
+                    </div>
+                    <hr style="margin-bottom: -10px" />
+                    <? } ?>
+
+                    <? if (formJson['Preferred_schedule'] === null || formJson['Preferred_schedule']) { ?>
+                    <!-- PREFREED SCHEDULE -->
+                    <div class="col-md-12">
+                        <div class="field-group">
+                            <label
+                                data-i18n="label_PreferredSchedule"
+                                class="small"
+                                for="Preferred_schedule"
+                                style="--bgcolor: <?= uiStyle.bgcolor ?>"
+                            >
+                                Preferred Schedule
+                            </label>
+                            <input
+                                type="button"
+                                name="Preferred_schedule"
+                                class="form-inputs"
+                                value="<?= (formJson['Preferred_schedule']) ? formJson['Preferred_schedule'] : 'Select Schedule' ?>"
+                                required
+                                onclick="ShowDateTimeSelection(this)"
+                            />
+                        </div>
+                    </div>
+
+                    <? } ?>
+
+                    <? if (formJson['Table_number'] === null || formJson['Table_number']) { ?>
+                    <!-- TABLE NUMBER -->
+                    <div class="col-md-12">
+                        <div class="field-group">
+                            <label
+                                data-i18n="label_TableNumber"
+                                for="Table_number"
+                                class="small"
+                                style="--bgcolor: <?= uiStyle.bgcolor ?>"
+                            >
+                                Table Number
+                            </label>
+
+                            <input
+                                type="tel"
+                                name="Table_number"
+                                class="form-inputs"
+                                value="<?= formJson['Table_number'] ?>"
+                                size="5"
+                                required
+                            />
+                        </div>
+                    </div>
+                    <? } ?>
+
+                    <? if (formJson['Plate_number'] === null || formJson['Plate_number']) { ?>
+                    <!-- PLATE NUMBER -->
+                    <div class="col-md-12">
+                        <div class="field-group">
+                            <label
+                                data-i18n="label_PlateNumber"
+                                class="small"
+                                for="Plate_number"
+                                style="--bgcolor: <?= uiStyle.bgcolor ?>"
+                            >
+                                Plate Number
+                            </label>
+                            <input
+                                type="text"
+                                name="Plate_number"
+                                class="form-inputs"
+                                value="<?= formJson['Plate_number'] ?>"
+                                size="10"
+                                required
+                            />
+                        </div>
+                    </div>
+                    <? } ?>
+
+                    <? if (formJson['Instruction'] === null || formJson['Instruction']) { ?>
+                    <!-- INSTRUCTION -->
+                    <div class="col-md-12">
+                        <div class="field-group">
+                            <label
+                                data-i18n="label_SpecialInstruction"
+                                class="small"
+                                for="Instruction"
+                                style="--bgcolor: <?= uiStyle.bgcolor ?>"
+                            >
+                                Special Instructions
+                            </label>
+                            <!-- prettier-ignore -->
+                            <textarea 
+                            style="width: 100%; padding-top: 10px;"
+                            name="Instruction" 
+                            cols="30" 
+                            rows="4" 
+                            ><?= formJson['Instruction'] ?></textarea>
+                            <!-- prettier-ignore-end -->
+                        </div>
+                    </div>
+
+                    <? } ?>
+                    <hr />
+                    <div class="button-container column-center">
+                        <button
+                            data-i18n="btn_Submit"
+                            class="ui-button-style"
+                            style="
+                                --button_bgcolor: <?= uiStyle.button_bgcolor ?>;
+                                --button_textcolor: <?= uiStyle.button_textcolor
+                                    ?>;
+                            "
+                            onclick="SubmitDetails()"
+                        >
+                            Submit
+                        </button>
+                    </div>
+                </div>
+                <!--
+                    <div class="column-center">
+                    <p>
+                        For Drive-thru, please enter your vehicle's plate number
+                        in the instruction box
+                    </p>
+                </div>
+                -->
+            </div>
+            <!-- Modal -->
+            <!-- Modal Confirm Details -->
+            <div
+                class="modal fade"
+                id="modal-confirm-details"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div
+                                class="ejs-var-card-style column-center"
+                                style="
+                                    --bgcolor: <?= uiStyle.bgcolor ?>;
+                                    --textcolor: <?= uiStyle.textcolor?>;
+                                "
+                            >
+                                <div class="column-center">
+                                    <p data-i18n="text_CorrectDetailsWarning">
+                                        Please make sure that the given details
+                                        are correct. Continue?
+                                    </p>
+                                </div>
+                                <div class="modal-footer-container">
+                                    <hr />
+                                    <div class="row-space">
+                                        <button
+                                            data-i18n="btn_Back"
+                                            type="button"
+                                            class="btn btn-warning"
+                                            onclick="CloseConfirmationModal(false)"
+                                        >
+                                            Back
+                                        </button>
+                                        <button
+                                            data-i18n="btn_Yes"
+                                            type="button"
+                                            class="btn ui-button-style"
+                                            style="
+                                                --button_bgcolor: <?=
+                                                    uiStyle.button_bgcolor ?>;
+                                                --button_textcolor: <?=
+                                                    uiStyle.button_textcolor?>;
+                                            "
+                                            onclick="CloseConfirmationModal(true)"
+                                        >
+                                            Yes
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal OTP Validation -->
+            <div
+                class="modal fade"
+                id="modal-otp-validation"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div
+                                class="ejs-var-card-style column-center"
+                                style="
+                                    --bgcolor: <?= uiStyle.bgcolor ?>;
+                                    --textcolor: <?= uiStyle.textcolor?>;
+                                "
+                            >
+                                <div class="column-center">
+                                    <div class="col-md-12">
+                                        <div class="field-group">
+                                            <p data-i18n="text_OTPWarning">
+                                                One Time Password (OTP) has been
+                                                sent to your email. It will
+                                                expire in 5 minutes. Please
+                                                enter OTP here to verify your
+                                                email.
+                                            </p>
+                                            <label
+                                                data-i18n="label_InputOTP"
+                                                class="small"
+                                                for="input-otp"
+                                                style="
+                                                    --bgcolor: <?=
+                                                        uiStyle.bgcolor ?>;
+                                                "
+                                            >
+                                                Input OTP
+                                            </label>
+                                            <input
+                                                type="tel"
+                                                style="
+                                                    width: 100%;
+                                                    height: 50px;
+                                                    margin-top: 10px;
+                                                "
+                                                inputmode="tel"
+                                                id="input-otp"
+                                                required
+                                            />
+                                            <input
+                                                type="hidden"
+                                                name=""
+                                                id="input-otp-secret"
+                                                value=""
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer-container">
+                                    <hr />
+                                    <div class="row-space">
+                                        <button
+                                            data-i18n="label_Validate"
+                                            type="button"
+                                            class="btn ui-button-style"
+                                            style="
+                                                --button_bgcolor: <?=
+                                                    uiStyle.button_bgcolor ?>;
+                                                --button_textcolor: <?=
+                                                    uiStyle.button_textcolor?>;
+                                            "
+                                            onclick="ValidateOTP(this)"
+                                        >
+                                            Validate
+                                        </button>
+                                        <button
+                                            data-i18n="label_Resend"
+                                            type="button"
+                                            class="btn ui-button-style"
+                                            style="
+                                                --button_bgcolor: <?=
+                                                    uiStyle.button_bgcolor ?>;
+                                                --button_textcolor: <?=
+                                                    uiStyle.button_textcolor?>;
+                                            "
+                                            onclick="ResendOTP(this)"
+                                        >
+                                            Resend
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <? if (isWithPreoder) { ?>
+            <!-- Modal Date and Time Select -->
+            <div
+                class="modal fade"
+                id="modal-date-time-select"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div
+                                class="ejs-var-card-style column-center"
+                                style="
+                                    --bgcolor: <?= uiStyle.bgcolor ?>;
+                                    --textcolor: <?= uiStyle.textcolor?>;
+                                "
+                            >
+                                <div class="column-center">
+                                    <label
+                                        data-i18n="label_Date"
+                                        for="select-date"
+                                        >Date</label
+                                    >
+                                    <select
+                                        size="1"
+                                        name="select-date"
+                                        id="select-date"
+                                    >
+                                        <!-- Blank option for resetting -->
+                                        <option value=""></option>
+                                        <? preorderFilter.forEach(function(item, index) { ?>
+                                        <option
+                                            value="<?= item['preorder_date'] ?>"
+                                        >
+                                            <?= item['preorder_date'] ?>
+                                        </option>
+                                        <? }) ?>
+                                    </select>
+
+                                    <label
+                                        data-i18n="label_Time"
+                                        for="select-time"
+                                    >
+                                        Time</label
+                                    >
+                                    <select
+                                        size="1"
+                                        name="select-time"
+                                        id="select-time"
+                                    ></select>
+                                </div>
+                                <div class="column-center">
+                                    <p>
+                                        <br /><span data-i18n="text_LeaveBlank">
+                                            Leave blank for immediate processing
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="modal-footer-container">
+                                    <hr />
+                                    <div class="row-space">
+                                        <button
+                                            data-i18n="btn_Confirm"
+                                            type="button"
+                                            class="ui-button-style"
+                                            style="
+                                                --button_bgcolor: <?=
+                                                    uiStyle.button_bgcolor ?>;
+                                                --button_textcolor: <?=
+                                                    uiStyle.button_textcolor?>;
+                                            "
+                                            onclick="SubmitDateAndTime(this)"
+                                        >
+                                            Confirm
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <? } ?>
+        </div>
+
+        <div
+            id="loading-view"
+            class="column-center hidden"
+            style="height: 100vh"
+        >
+            <div id="loading-icon" class="loader"></div>
+        </div>
+
+        <!-- This is only used by VIBER -->
+        <?- include('../../layouts/z_close_view') ?>
+
+        <?- include('../../layouts/footer_scripts') ?>
+
+        <!-- Self Scripts -->
+        <script src="/js/services/user_details.js"></script>
+    </body>
+</html>

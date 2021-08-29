@@ -1,0 +1,82 @@
+.col-md {
+    padding: 0;
+}
+
+.required-asterisk {
+    font-weight: 900;
+    color: tomato;
+}
+
+.card-input-container {
+    border: 0px;
+}
+
+.iframe-spacing {
+    margin: 0px;
+    padding: 2px;
+}
+
+/* Layouts */
+
+.column-center {
+    margin: 10px 0;
+}
+
+/* Design of Input Container */
+
+.card-input-container {
+    padding: 5px;
+    border: 5px solid rgb(12, 72, 136);
+}
+
+.input-column-center {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    margin: 5px 0px 0px;
+}
+
+.input-row-left {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: row;
+    margin: 5px 0px 0px;
+}
+
+.input-row-center {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    margin: 5px 0px 0px;
+}
+
+.input-row {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+}
+
+select {
+    height: 30px;
+}
+
+.input-short {
+    width: 60px;
+}
+
+.input-full {
+    width: 100%;
+}
+
+.input-no-border {
+    border: none;
+}
+
+.input-row label {
+    margin: 0;
+}

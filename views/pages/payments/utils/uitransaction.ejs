@@ -1,0 +1,88 @@
+<? if (uiPaymentLogo) { ?>
+<!-- Banner Logo -->
+<div style="position: relative; top: 10px">
+    <img src="<?= uiPaymentLogo ?>" alt="<?= uiPaymentText ?>" srcset="" />
+</div>
+<? } ?>
+
+<!-- Transaction Details -->
+<div class="column-center" style="margin-top: 10px">
+    <!-- Instructions -->
+    <div class="col-md-12">
+        <div class="field-group">
+            <p
+                data-i18n="text_DoNotCloseInstruction"
+                class="ui-transaction-p"
+                style="
+                    --bgcolor: <?= uiStyle.bgcolor ?>;
+                    color: red;
+                    font-weight: bolder;
+                "
+            >
+                Please do NOT close this page while payment is being processed.
+                This page will automatically close once payment is complete.
+            </p>
+        </div>
+    </div>
+    <? if (uiName) { ?>
+    <!-- Name -->
+    <div class="col-md-12">
+        <div class="field-group">
+            <label
+                data-i18n="label_Name"
+                class="small"
+                style="--bgcolor: #ffffff"
+            >
+                Name
+            </label>
+            <p
+                class="border-frame ui-transaction-p"
+                style="--bgcolor: <?= uiStyle.bgcolor ?>"
+            >
+                <?= uiName ?>
+            </p>
+        </div>
+    </div>
+    <? } ?>
+    <? if (uiEmail) { ?>
+    <!-- Email -->
+    <div class="col-md-12">
+        <div class="field-group">
+            <label
+                data-i18n="label_Email"
+                class="small"
+                style="--bgcolor: #ffffff"
+            >
+                Email
+            </label>
+            <p
+                class="border-frame ui-transaction-p"
+                style="--bgcolor: <?= uiStyle.bgcolor ?>"
+            >
+                <?= uiEmail ?>
+            </p>
+        </div>
+    </div>
+    <? } ?>
+    <? if (uiAmount) { ?>
+    <!-- Amount -->
+    <div class="col-md-12">
+        <div class="field-group">
+            <label
+                data-i18n="label_Amount"
+                class="small"
+                style="--bgcolor: #ffffff"
+            >
+                Amount
+            </label>
+            <p
+                class="border-frame ui-transaction-p"
+                style="--bgcolor: <?= uiStyle.bgcolor ?>"
+            >
+                <?= uiCurrency ?>
+                <?= uiAmount ?>
+            </p>
+        </div>
+    </div>
+    <? } ?>
+</div>

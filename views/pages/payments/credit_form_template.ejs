@@ -1,0 +1,113 @@
+<div id="main-view" class="">
+    <div class="container">
+        <!-- Transaction Details -->
+        <div class="column-center">
+            <h4>Transaction Details</h4>
+            <table class="table table-sm">
+                <tbody>
+                    <tr>
+                        <td>Name:</td>
+                        <td><?= name ?></td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td><?= email ?></td>
+                    </tr>
+                    <tr>
+                        <td>Amount:</td>
+                        <td>
+                            <?= currency ?>
+                            <?= amount ?>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Credit Card Details-->
+        <!-- Card Contents: 
+            card-name
+            card-number
+            card-exp-month
+            card-exp-year
+            card-cvv
+            card-postal
+         -->
+        <div class="column-center card-input-container">
+            <div class="input-row">
+                <label for="input-name">Name:</label>
+                <input
+                    type="text"
+                    name="input-name"
+                    id="card-name"
+                    placeholder="John Doe"
+                />
+            </div>
+            <div class="input-row">
+                <label for="input-card-number">Card Number:</label>
+                <input
+                    type="tel"
+                    name="input-card-number"
+                    id="card-number"
+                    maxlength="16"
+                    placeholder="1234123412341234"
+                />
+            </div>
+            <div class="input-row">
+                <label for="input-card-number">Expiration:</label>
+                <div class="">
+                    <select id="card-exp-month">
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                    <input
+                        class="input-short"
+                        type="tel"
+                        name="input-expiration"
+                        id="card-exp-year"
+                        maxlength="4"
+                        placeholder="2020"
+                    />
+                </div>
+            </div>
+            <div class="input-row">
+                <label for="input-cvv">CVV:</label>
+                <input
+                    type="tel"
+                    name="input-cvv"
+                    id="card-cvv"
+                    maxlength="3"
+                    placeholder="123"
+                />
+            </div>
+            <div class="input-row">
+                <label for="input-postal">Postal Code:</label>
+                <input
+                    type="tel"
+                    name="input-postal"
+                    id="card-postal"
+                    maxlength="5"
+                    placeholder="12345"
+                />
+            </div>
+        </div>
+        <!-- Submit Button -->
+        <div class="column-center">
+            <input
+                class="btn btn-primary element-full-width text-bold zloading-button"
+                type="button"
+                id="btn-submit"
+                value="SUBMIT"
+            />
+        </div>
+    </div>
+</div>
