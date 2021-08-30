@@ -1,0 +1,138 @@
+.search-box-container {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 1;
+}
+
+.search-box-container > input,
+.search-box-container > button {
+    margin-left: 10px;
+}
+
+.bottom-box-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 1;
+    /* padding-top: 100px; */
+}
+
+/* 
+==================
+FORM STYLE at GENERATED ADDRESS FIELDS 
+==================
+*/
+
+.address-fields {
+    display: flex;
+    flex-flow: column;
+    align-content: space-around;
+}
+
+.input-row {
+    display: flex;
+    flex-flow: row;
+    align-content: space-around;
+}
+
+.field-group > label {
+    position: relative;
+    top: 12px;
+    left: 15px;
+    margin-bottom: 0.25rem;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+    background-color: white;
+}
+
+.col-md-6,
+.col-md-12 {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.small {
+    font-size: 80%;
+    font-weight: 400;
+}
+
+.field-input {
+    width: 100%;
+    height: 50px;
+}
+
+/* =============== */
+/* MAP RELATED CSS */
+/* =============== */
+#map {
+    /* position: absolute; */
+    top: 0px;
+    bottom: 0px;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+/* Optional: Makes the sample page fill the window. */
+#description {
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+}
+
+#infowindow-content {
+    display: none;
+}
+
+#infowindow-content .title {
+    font-weight: bold;
+}
+
+#map #infowindow-content {
+    display: inline;
+}
+
+#title {
+    color: #fff;
+    background-color: #4d90fe;
+    font-size: 25px;
+    font-weight: 500;
+    padding: 6px 12px;
+}
+#target {
+    width: 345px;
+}
+
+/* Autocomplete Stuff */
+.autocomplete-section {
+    position: absolute;
+    top: 6vh;
+
+    background-color: yellow;
+    border-radius: 10px;
+    width: 80%;
+}
+
+.autocomplete-suggestion {
+    line-height: 20px;
+    padding: 5px;
+}
+
+.autocomplete-suggestion-address {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+
+    font-size: 15px;
+    line-height: 20px;
+}
