@@ -118,14 +118,31 @@ body {
     position: absolute;
     top: 6vh;
 
-    background-color: yellow;
+    background-color: white;
     border-radius: 10px;
-    width: 80%;
+    width: 90%;
+    border: 3px solid #4d4d4d;
 }
 
 .autocomplete-suggestion {
     line-height: 20px;
     padding: 5px;
+
+    border-bottom: 3px solid rgb(90, 90, 90);
+}
+
+.autocomplete-suggestion:hover,
+.autocomplete-suggestion:active {
+    background-color: #8cf2ff;
+}
+.autocomplete-suggestion:hover:nth-child(1),
+.autocomplete-suggestion:active:nth-child(1) {
+    border-radius: 10px 10px 0 0;
+}
+
+.autocomplete-suggestion:hover:last-child,
+.autocomplete-suggestion:active:last-child {
+    border-radius: 0 0 10px 10px;
 }
 
 .autocomplete-suggestion-address {

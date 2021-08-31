@@ -42,6 +42,13 @@
                 <?= apikey ?>
             </div>
             <? } ?>
+
+            <input
+                id="ejs-var-address-info-flag"
+                type="hidden"
+                name=""
+                value="<?= addressinfoFlag ?>"
+            />
         </code>
 
         <div id="main-view" style="margin: 5px">
@@ -111,7 +118,7 @@
                 <!-- Search Box Suggestions -->
                 <div
                     class="autocomplete-section hidden"
-                    style="max-height: 300px; width: 99%; z-index: 9999"
+                    style="max-height: 300px; z-index: 9999"
                 >
                     <div class="autocomplete-suggestion">
                         <div class="autocomplete-suggestion-name">
@@ -120,6 +127,8 @@
                         <div class="autocomplete-suggestion-address">
                             AddressAddressAddressAddressAddressAddressAddressAddress
                         </div>
+                        <input type="hidden" name="latitude" value="" />
+                        <input type="hidden" name="longitude" value="" />
                     </div>
                     <div class="autocomplete-suggestion">
                         <div class="autocomplete-suggestion-name">
@@ -272,7 +281,9 @@
                         </p>
                     </div>
                     <!-- Generated Address Fields here -->
-                    <div class="address-fields"></div>
+                    <div class="address-fields">
+                        <?- addressinfoSection ?>
+                    </div>
                     <? } ?>
 
                     <button

@@ -3,28 +3,24 @@ const router = express.Router();
 
 let addressinfo = [
     {
-        get_address_info: [
-            {
-                field: 'HOUSE_FLOOR_UNIT',
-                label: 'House/Floor/Unit No.',
-                value: null,
-            },
-            {
-                field: 'BUILDING',
-                label: 'Building Name',
-                value: null,
-            },
-            {
-                field: 'STREET',
-                label: 'Street Name',
-                value: null,
-            },
-            {
-                field: 'INSTRUCTION',
-                label: 'Landmark/Instructions',
-                value: null,
-            },
-        ],
+        field: 'HOUSE_FLOOR_UNIT',
+        label: 'House/Floor/Unit No.',
+        value: null,
+    },
+    {
+        field: 'BUILDING',
+        label: 'Building Name',
+        value: null,
+    },
+    {
+        field: 'STREET',
+        label: 'Street Name',
+        value: null,
+    },
+    {
+        field: 'INSTRUCTION',
+        label: 'Landmark/Instructions',
+        value: null,
     },
 ];
 
@@ -44,29 +40,109 @@ let queryvalue = {
 const mapbuildermodule = require('../../modules/mapbuildermodule.js');
 
 router.get('/', async function (req, res) {
-    // Get the query object
-    // Debug for now
-    let queryObject = queryvalue;
-    let userProfile = queryvalue;
+    try {
+        console.log('\n mapaddresslocationcontroller.GET_map');
 
-    // Get the API key from the database
-    let apikey = 'pk.617c1ae9f2ec8cf298af42fe5d420466';
+        // Get the query object
+        // Debug for now
+        let queryObject = queryvalue;
+        let userProfile = queryvalue;
 
-    // Get the addressinfo from the database
-    let addressInfoArray = addressinfo;
+        // Get the API key from the database
+        let apikey = 'pk.617c1ae9f2ec8cf298af42fe5d420466';
 
-    // Build the addressinfo html
-    let addressinfohtml =
-        mapbuildermodule.GenerateAddressFields(addressInfoArray);
+        // Get the addressinfo from the database
+        let addressInfoArray = addressinfo;
 
-    res.render('pages/services/map_address_locationiq', {
-        title: 'Submit Address',
-        referenceLat: queryObject.latitude,
-        referenceLong: queryObject.longitude,
-        apikey,
-        language: userProfile.language,
-        addressinfoSection: addressinfohtml ? addressinfohtml : '',
-    });
+        // Build the addressinfo html
+        let addressinfohtml = '';
+        if (queryObject.orderpreference.toLowerCase() === 'delivery') {
+            addressinfohtml = await mapbuildermodule.GenerateAddressFields(
+                addressInfoArray
+            );
+        }
+
+        let addressinfoFlag = addressinfohtml ? true : false;
+
+        // console.log(addressinfohtml);
+
+        res.render('pages/services/map_address_locationiq', {
+            title: 'Submit Address',
+            referenceLat: queryObject.latitude,
+            referenceLong: queryObject.longitude,
+            apikey,
+            addressinfoFlag,
+            language: userProfile.language,
+            addressinfoSection: addressinfohtml ? addressinfohtml : '',
+        });
+    } catch (e) {
+        console.log('\n mapaddresslocationcontroller.GET_map ERROR');
+        console.log(JSON.stringify(e));
+        console.log(e);
+        res.json({
+            status: 'error',
+            message: e.message,
+        });
+    }
+});
+
+router.post('/search', express.json(), async function (req, res) {
+    try {
+        console.log('\n mapaddresslocationcontroller.POST_search');
+
+        // Get the query object
+        // Debug for now
+        let userProfile = queryvalue;
+
+        // Get the body
+        let { queryObject, apikey, searchTerm } = req.body;
+
+        // let viewbox = `<max_lon>,<max_lat>,<min_lon>,<min_lat>`;
+
+        // Get the places
+        let suggestionshtml = await mapbuildermodule.PlacesAutoComplete({
+            apikey,
+            searchTerm,
+        });
+
+        // console.log(suggestionshtml);
+
+        res.json({
+            status: 'success',
+            data: {
+                html: suggestionshtml,
+            },
+        });
+    } catch (e) {
+        console.log('\n mapaddresslocationcontroller.POST_search ERROR');
+        console.log(e);
+        console.log(JSON.stringify(e));
+        res.json({
+            status: 'error',
+            message: e.message,
+        });
+    }
+});
+
+router.post('/save', express.json(), async function (req, res) {
+    try {
+        console.log('\n mapaddresslocationcontroller.POST_save');
+
+        let body = req.body;
+        console.log(JSON.stringify(body));
+
+        res.json({
+            status: 'success',
+        });
+    } catch (e) {
+        console.log('\n mapaddresslocationcontroller.POST_save ERROR');
+        console.log(e);
+        console.log(JSON.stringify(e));
+        res.json({
+            status: 'error',
+            message: e.message,
+        });
+    }
 });
 
 router.get('/file', function (req, res) {

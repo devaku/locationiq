@@ -1,3 +1,5 @@
+const fetch = require('node-fetch');
+
 module.exports = {
     GenerateAddressFields: async function (addressInfoArray) {
         try {
@@ -6,12 +8,12 @@ module.exports = {
             let modalBody = ``;
             if (addressInfoArray) {
                 console.log('\n Generating additional address fields');
-                console.log(addressInfoArray);
+                console.log(JSON.stringify(addressInfoArray));
 
                 for (let x = 0; x < addressInfoArray.length; x++) {
                     let currentField = addressInfoArray[x];
                     let currentHtml = '';
-                    if (currentField.field.toUpper() === 'INSTRUCTION') {
+                    if (currentField.field.toUpperCase() === 'INSTRUCTION') {
                         // Specifically for text areas
                         currentHtml = `
                         <div class="col-md-12">
@@ -73,76 +75,70 @@ module.exports = {
             throw e;
         }
     },
-};
 
-function GenerateAddressFields() {
-    // Get the value
-    let addressInfoArray = document.querySelector(
-        '#ejs-var-address-info-array'
-    ).value;
+    PlacesAutoComplete: async function ({ apikey, searchTerm, viewbox = '' }) {
+        try {
+            // https://locationiq.com/docs
 
-    let modalBody = ``;
-    if (addressInfoArray) {
-        console.log('There are extra address fields');
+            // console.log('\n mapbuildermodule.PlacesAutoComplete');
 
-        addressInfoArray = JSON.parse(addressInfoArray);
-        console.log(addressInfoArray);
-        for (let x = 0; x < addressInfoArray.length; x++) {
-            let currentField = addressInfoArray[x];
-            let currentHtml = '';
-            if (currentField.field === 'INSTRUCTION') {
-                // Specifically for text areas
-                // prettier-ignore
-                currentHtml = `
-                <div class="col-md-12">
-                    <div class="field-group">
-                        <label class="small" data-i18n="${currentField.label}" for="${currentField.field}">
-                            ${currentField.label}
-                        </label>
-                        <textarea 
-                        class="field-input"
-                        name="${currentField.field}"        
-                        id="address-info-${currentField.field}" 
-                        cols="30" 
-                        rows="3"        
-                        placeholder="Enter ${currentField.label}">${currentField.value ? currentField.value.trim() : ''}</textarea>
-                    </div>
-                </div>
-                `;
-            } else {
-                // Start generating the HTML
-                currentHtml = `
-                <div class="col-md-12">
-                    <div class="field-group">
-                        <label class="small" data-i18n="${
-                            currentField.label
-                        }" for="${currentField.field}">
-                            ${currentField.label}
-                        </label>
-                        <input
-                            class="field-input"
-                            type="text"
-                            name="${currentField.field}"
-                            id="address-info-${currentField.field}"
-                            placeholder="Enter ${currentField.label}"
-                            value="${
-                                currentField.value ? currentField.value : ''
-                            }"
-                        />
-                    </div>
-                </div>
-                `;
+            let query = `q=${searchTerm}`;
+
+            // Limit results
+            query += `&limit=5`;
+
+            // Prefer results to be inside the box
+            if (viewbox) {
+                query += `&viewbox=${viewbox}`;
             }
 
-            modalBody += currentHtml;
-        }
+            let url = `https://api.locationiq.com/v1/autocomplete.php?key=${apikey}&${query}`;
 
-        // Attach the fields into the modal
-        let addressFields = document.querySelector('.address-fields');
-        addressFields.innerHTML = modalBody;
-    }
-    // If null, do nothing
-    else {
-        console.log('There are NO extra address fields');
-    }
-}
+            let response = await fetch(url, {
+                method: 'GET',
+            })
+                .then((res) => res.json())
+                .catch((e) => {
+                    console.log(
+                        '\n mapbuildermodule.PlacesAutoComplete FETCH ERROR'
+                    );
+                    console.log(e);
+                    console.log(JSON.stringify(e));
+                    return '';
+                });
+
+            // Build the HTML
+            let finalhtml = ``;
+            if (response.error) {
+                console.log('\n There was an error in geocoding');
+                console.log(response.error);
+            } else {
+                if (response.length > 0) {
+                    for (let i = 0; i < response.length; i++) {
+                        let currentplace = response[i];
+                        let template = `
+                        <div class="autocomplete-suggestion" style="cursor: pointer">
+                            <div class="autocomplete-suggestion-name">
+                                ${currentplace.display_place}
+                            </div>
+                            <div class="autocomplete-suggestion-address">
+                            ${currentplace.display_place} ${currentplace.display_address}
+                            </div>
+                            <input type="hidden" name="latitude" value="${currentplace.lat}">
+                            <input type="hidden" name="longitude" value="${currentplace.lon}">
+                        </div>
+                        `;
+
+                        finalhtml += template;
+                    }
+                }
+            }
+            return finalhtml;
+        } catch (e) {
+            console.log('\n mapbuildermodule.PlacesAutoComplete ERROR');
+            console.log(e);
+            console.log(JSON.stringify(e));
+            return '';
+        }
+    },
+};

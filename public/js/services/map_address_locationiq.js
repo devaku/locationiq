@@ -61,22 +61,136 @@ async function LoadMap() {
 
 async function SearchPlace(e) {
     let inputText = e.value.trim();
-    if (inputText.length > 2) {
-        // Get items from backend
 
-        // Display suggestinos
-        document
-            .querySelector('.autocomplete-section')
-            .classList.remove('hidden');
+    // Hide suggestinos
+    document.querySelector('.autocomplete-section').classList.add('hidden');
+
+    // Clear HTML
+    document.querySelector('.autocomplete-section').innerHTML = '';
+
+    if (inputText.length > 4) {
+        let queryObject = GetQueryObject();
+        let apikey = document
+            .querySelector('#location-iq-apikey')
+            .innerHTML.trim();
+        let data = {
+            queryObject,
+            apikey,
+            searchTerm: inputText,
+        };
+
+        // Get items from backend
+        let response = await fetch('/search', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then((res) => res.json())
+            .catch((e) => {
+                console.log('FETCH ERROR');
+                console.log(e);
+            });
+
+        console.log(response);
+        // esponse.status != 'success'
+        if (response.status === 'success' && response.data.html) {
+            let html = response.data.html;
+            // Clear HTML
+            document.querySelector('.autocomplete-section').innerHTML = '';
+
+            // Insert suggestions
+            document
+                .querySelector('.autocomplete-section')
+                .insertAdjacentHTML('afterbegin', html);
+
+            // Attach the listeners
+            await ApplyEventListeners();
+
+            // Display suggestinos
+            document
+                .querySelector('.autocomplete-section')
+                .classList.remove('hidden');
+        } else {
+            // console.log('Hiding suggestions');
+            // Hide suggestions
+            document
+                .querySelector('.autocomplete-section')
+                .classList.add('hidden');
+        }
     } else {
         // Hide suggestions
         document.querySelector('.autocomplete-section').classList.add('hidden');
     }
 }
 
+async function ApplyEventListeners() {
+    // Get the elements and convert them into an array
+    // And loop through the array
+    Array.from(document.querySelectorAll('.autocomplete-suggestion')).forEach(
+        (element) => {
+            // console.log(element);
+            // Each suggestion can be clicked
+            element.addEventListener('click', async function () {
+                let address = element
+                    .querySelector('.autocomplete-suggestion-address')
+                    .innerHTML.trim();
+
+                let lat = element.querySelector('input[name=latitude]').value;
+                let lon = element.querySelector('input[name=longitude]').value;
+
+                // Put the values in the saver
+                document.querySelector('#input-lat').value = lat;
+                document.querySelector('#input-long').value = lon;
+                document.querySelector(
+                    '#address-info-customer-address'
+                ).innerHTML = address;
+
+                // Hide suggestions
+                document
+                    .querySelector('.autocomplete-section')
+                    .classList.add('hidden');
+
+                // console.log('ADDRESS: ', address);
+                // console.log('lat: ', lat);
+                // console.log('lon: ', lon);
+            });
+        }
+    );
+}
+
 // ==============================
 // END OF LOCATION IQ RELATED JAVASCRIPT
 // ==============================
+
+async function BeginSearch() {
+    // Get the textbox
+    let searchbox = document.querySelector('#input-searchbox');
+    await SearchPlace(searchbox);
+
+    // Hide suggestinos
+    document.querySelector('.autocomplete-section').classList.add('hidden');
+
+    // Grab the first suggestion and put it in the customer address label
+    let suggestionsArray = Array.from(
+        document.querySelectorAll('.autocomplete-suggestion')
+    );
+    if (suggestionsArray.length > 0) {
+        let element = suggestionsArray[0];
+        let address = element
+            .querySelector('.autocomplete-suggestion-address')
+            .innerHTML.trim();
+        let lat = element.querySelector('input[name=latitude]').value;
+        let lon = element.querySelector('input[name=longitude]').value;
+
+        // Put the values in the saver
+        document.querySelector('#input-lat').value = lat;
+        document.querySelector('#input-long').value = lon;
+        document.querySelector('#address-info-customer-address').innerHTML =
+            address;
+    }
+}
 
 document
     .querySelector('#btn-final-submit')
@@ -90,12 +204,11 @@ document
                 '#sweet-text_CustomerAddressCannotBeBlank'
             ).innerHTML;
             DisplaySweetAlertInfo(text);
-
             return;
         }
 
         // Main Search box string
-        let address = document.querySelector('#pac-input').value;
+        let address = document.querySelector('#input-searchbox').value;
         if (!address) {
             let text = document.querySelector(
                 '#sweet-text_CustomerAddressCannotBeBlank'
@@ -162,7 +275,7 @@ document
     .addEventListener('click', async function (e) {
         let long = document.querySelector('#input-long').value;
         let lat = document.querySelector('#input-lat').value;
-        let address = document.querySelector('#pac-input').value;
+        let address = document.querySelector('#input-searchbox').value;
 
         let displayAddress = document.querySelector(
             '#address-info-customer-address'
@@ -224,7 +337,7 @@ document
         }
 
         //Send the JSON to the backend
-        let fetchResponse = await fetch('save', {
+        let fetchResponse = await fetch('/save', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
