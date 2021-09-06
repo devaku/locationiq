@@ -4,12 +4,7 @@
     "description": "Repository that has an working Express template",
     "main": "app.js",
     "scripts": {
-        "heroku-postbuild": "npm run install-server",
-        "install-server": "npm install",
-        "debug": "nodemon app.js --exec \"npm run lint && node\"",
         "debug-nolint": "nodemon app.js",
-        "quick-start": "nodemon test.js",
-        "lint": "eslint **/*.js"
     },
     "author": "Alejo Kim Uy",
     "license": "ISC",
