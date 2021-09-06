@@ -70,12 +70,12 @@ FORM STYLE at GENERATED ADDRESS FIELDS
 /* =============== */
 /* MAP RELATED CSS */
 /* =============== */
-#map {
-    /* position: absolute; */
+#map-section {
+    position: absolute;
     top: 0px;
     bottom: 0px;
-    height: 100%;
     width: 100%;
+    z-index: -1;
 }
 
 body {
@@ -111,6 +111,25 @@ body {
 }
 #target {
     width: 345px;
+}
+
+/* Map marker */
+
+.marker {
+    display: block;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 50px;
+    height: 50px;
+}
+
+/* Pin submission button */
+
+.pin-submission {
+    position: absolute;
+    top: 93vh;
+    border-radius: 0%;
 }
 
 /* Autocomplete Stuff */

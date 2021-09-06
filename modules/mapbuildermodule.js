@@ -76,6 +76,7 @@ module.exports = {
         }
     },
 
+    // Return locations based on text input
     PlacesAutoComplete: async function ({ apikey, searchTerm, viewbox = '' }) {
         try {
             // https://locationiq.com/docs
@@ -139,6 +140,81 @@ module.exports = {
             console.log(e);
             console.log(JSON.stringify(e));
             return '';
+        }
+    },
+
+    // Return coordinates based on user drop of pin
+    ReverseGeocode: async function ({ apikey, lat, lng }) {
+        try {
+            console.log('\n mapbuildermodule.ReverseGeocode');
+
+            // https://locationiq.com/docs
+
+            let url = `https://us1.locationiq.com/v1/reverse.php?key=${apikey}&lat=${lat}&lon=${lng}&format=json`;
+
+            // Get the detail based on the provided
+            // information
+            let response = await fetch(url, {
+                method: 'GET',
+            })
+                .then((res) => res.json())
+                .catch((e) => {
+                    console.log(
+                        '\n mapbuildermodule.ReverseGeocode FETCH ERROR'
+                    );
+                    console.log(e);
+                    console.log(JSON.stringify(e));
+                    return '';
+                });
+
+            // Sample response
+            // {
+            //     "place_id": "236942763",
+            //     "licence": "https://locationiq.com/attribution",
+            //     "osm_type": "relation",
+            //     "osm_id": "7515426",
+            //     "lat": "48.8611473",
+            //     "lon": "2.33802768704666",
+            //     "display_name": "Louvre Museum, Rue Saint-Honoré, Quartier du Palais Royal, 1st Arrondissement, Paris, Ile-de-France, Metropolitan France, 75001, France",
+            //     "address": {
+            //       "museum": "Louvre Museum",
+            //       "road": "Rue Saint-Honoré",
+            //       "suburb": "Quartier du Palais Royal",
+            //       "city_district": "1st Arrondissement",
+            //       "city": "Paris",
+            //       "county": "Paris",
+            //       "state": "Ile-de-France",
+            //       "country": "France",
+            //       "postcode": "75001",
+            //       "country_code": "fr"
+            //     },
+            //     "boundingbox": [
+            //       "48.8593816",
+            //       "48.8629132",
+            //       "2.3317162",
+            //       "2.3400113"
+            //     ]
+            //   }
+
+            // console.log(response);
+
+            let finalResponse = {};
+            if (response.error) {
+                console.log('\n There was an error in geocoding');
+                console.log(response.error);
+            } else {
+                if (response) {
+                    // Remove the uncessary entries
+                    finalResponse = {
+                        lat: response.lat,
+                        lng: response.lon,
+                        address: response.display_name,
+                    };
+                }
+            }
+            return finalResponse;
+        } catch (e) {
+            console.log('\n mapbuildermodule.ReverseGeocode ERROR');
         }
     },
 };

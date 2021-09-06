@@ -49,6 +49,21 @@
                 name=""
                 value="<?= addressinfoFlag ?>"
             />
+
+            <input
+                type=""
+                id="ejs-var-lat"
+                name="latitude"
+                class="field-input"
+                value="<?= referenceLat ?>"
+            />
+
+            <input
+                type=""
+                id="ejs-var-lng"
+                name="longitude"
+                value="<?= referenceLong ?>"
+            />
         </code>
 
         <div id="main-view" style="margin: 5px">
@@ -165,137 +180,139 @@
                 </div>
             </div>
 
-            <div id="map" class=""></div>
-            <!-- Addition Address Info Section -->
-            <div class="container" style="margin-top: 10px">
-                <!-- Code references -->
-                <section class="hidden">
-                    <!-- References -->
-                    <div class="col-md-12">
-                        <div class="field-group">
-                            <label class="small" for="">
-                                Lat - Reference
-                            </label>
-                            <input
-                                type=""
-                                id="input-lat-reference"
-                                name="latitude"
-                                class="field-input"
-                                value="<?= referenceLat ?>"
-                            />
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="field-group">
-                            <label class="small" for="">
-                                Long - Reference
-                            </label>
-                            <input
-                                type=""
-                                id="input-long-reference"
-                                name="longitude"
-                                class="field-input"
-                                value="<?= referenceLong ?>"
-                            />
-                        </div>
-                    </div>
-
-                    <!-- Inputs -->
-                    <div class="col-md-12">
-                        <div class="field-group">
-                            <label class="small" for=""> Lat - Input </label>
-                            <input
-                                type=""
-                                id="input-lat"
-                                name="latitude"
-                                value=""
-                                class="field-input"
-                            />
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="field-group">
-                            <label class="small" for=""> Long - Input </label>
-                            <input
-                                type=""
-                                id="input-long"
-                                name="latitude"
-                                value=""
-                                class="field-input"
-                            />
-                        </div>
-                    </div>
-                </section>
-                <div
-                    class="address-info-customer-address"
-                    style="margin-bottom: 15px"
+            <div id="map-section" class=""></div>
+            <div>
+                <button
+                    data-i18n="btn_Submit"
+                    type="button"
+                    class="btn btn-primary pin-submission"
+                    style="width: 100%"
+                    id="btn-pin-submission-submit"
                 >
-                    <p
-                        data-i18n="label_CustomerAddress"
-                        style="
-                            text-align: center;
-                            margin-bottom: 0.25rem;
-                            font-weight: 700;
-                        "
-                    >
-                        Customer Address
-                    </p>
-                    <p
-                        id="address-info-customer-address"
-                        style="text-align: left; margin: 0"
-                    ></p>
-                </div>
-                <div
-                    class="address-info-latitude-longitude hidden"
-                    style="margin-bottom: 15px"
-                >
-                    <p
-                        data-i18n="label_LatitudeLongitude"
-                        style="
-                            text-align: center;
-                            margin-bottom: 0.25rem;
-                            font-weight: 700;
-                        "
-                    >
-                        Latitude, Longitude
-                    </p>
-                    <p
-                        id="address-info-latitude-longitude"
-                        style="text-align: center; margin: 0"
-                    ></p>
-                </div>
-                <div id="modal-address-fields">
-                    <? if (addressinfoSection) {?>
-                    <div>
-                        <p
-                            data-i18n="label_AdditionalAddressInformation"
-                            style="
-                                text-align: center;
-                                margin: 0;
-                                font-weight: 700;
-                            "
+                    Submit
+                </button>
+            </div>
+
+            <!-- Pin Drop Submission Section -->
+            <div
+                id="modalpindropsubmission"
+                class="modal fade"
+                tabindex="-1"
+                role="dialog"
+            >
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div
+                            class="modal-header"
+                            style="align-items: center; justify-content: center"
                         >
-                            Additional Address Information
-                        </p>
-                    </div>
-                    <!-- Generated Address Fields here -->
-                    <div class="address-fields">
-                        <?- addressinfoSection ?>
-                    </div>
-                    <? } ?>
+                            <h6 class="modal-title">
+                                Are you sure this address is correct?
+                            </h6>
+                        </div>
+                        <div class="modal-body">
+                            <div
+                                id="address-info-section"
+                                class="container"
+                                style="margin-top: 10px"
+                            >
+                                <div
+                                    class="address-info-customer-address"
+                                    style="margin-bottom: 15px"
+                                >
+                                    <p
+                                        data-i18n="label_CustomerAddress"
+                                        style="
+                                            text-align: center;
+                                            margin-bottom: 0.25rem;
+                                            font-weight: 700;
+                                        "
+                                    >
+                                        Customer Address
+                                    </p>
+                                    <p
+                                        id="address-info-customer-address"
+                                        style="text-align: left; margin: 0"
+                                    ></p>
+                                </div>
+                                <div id="modal-address-fields">
+                                    <!-- Code references -->
+                                    <section class="hidden">
+                                        <!-- Inputs -->
+                                        <div class="col-md-12">
+                                            <div class="field-group">
+                                                <label class="small" for="">
+                                                    Lat - Input
+                                                </label>
+                                                <input
+                                                    type=""
+                                                    id="input-lat"
+                                                    name="latitude"
+                                                    value=""
+                                                    class="field-input"
+                                                />
+                                            </div>
+                                        </div>
 
-                    <button
-                        data-i18n="btn_Submit"
-                        type="button"
-                        class="btn btn-primary"
-                        style="width: 100%"
-                        id="btn-final-submit"
-                        data-dismiss="modal"
-                    >
-                        Submit
-                    </button>
+                                        <div class="col-md-12">
+                                            <div class="field-group">
+                                                <label class="small" for="">
+                                                    Long - Input
+                                                </label>
+                                                <input
+                                                    type=""
+                                                    id="input-long"
+                                                    name="longitude"
+                                                    value=""
+                                                    class="field-input"
+                                                />
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    <? if (addressinfoSection) {?>
+                                    <div>
+                                        <p
+                                            data-i18n="label_AdditionalAddressInformation"
+                                            style="
+                                                text-align: center;
+                                                margin: 0;
+                                                font-weight: 700;
+                                            "
+                                        >
+                                            Additional Address Information
+                                        </p>
+                                    </div>
+                                    <!-- Generated Address Fields here -->
+                                    <div class="address-fields">
+                                        <?- addressinfoSection ?>
+                                    </div>
+                                    <? } ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                                data-i18n="btn_Submit"
+                                type="button"
+                                class="btn btn-primary"
+                                style="width: 100%"
+                                id="btn-final-submit"
+                                data-dismiss="modal"
+                            >
+                                Submit
+                            </button>
+                            <button
+                                id="btn-modal-addressinfo-no"
+                                type="button"
+                                style="width: 100%"
+                                class="btn btn-secondary"
+                                data-dismiss="modal"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

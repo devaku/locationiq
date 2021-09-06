@@ -2,26 +2,26 @@ const express = require('express');
 const router = express.Router();
 
 let addressinfo = [
-    {
-        field: 'HOUSE_FLOOR_UNIT',
-        label: 'House/Floor/Unit No.',
-        value: null,
-    },
-    {
-        field: 'BUILDING',
-        label: 'Building Name',
-        value: null,
-    },
-    {
-        field: 'STREET',
-        label: 'Street Name',
-        value: null,
-    },
-    {
-        field: 'INSTRUCTION',
-        label: 'Landmark/Instructions',
-        value: null,
-    },
+    // {
+    //     field: 'HOUSE_FLOOR_UNIT',
+    //     label: 'House/Floor/Unit No.',
+    //     value: null,
+    // },
+    // {
+    //     field: 'BUILDING',
+    //     label: 'Building Name',
+    //     value: null,
+    // },
+    // {
+    //     field: 'STREET',
+    //     label: 'Street Name',
+    //     value: null,
+    // },
+    // {
+    //     field: 'INSTRUCTION',
+    //     label: 'Landmark/Instructions',
+    //     value: null,
+    // },
 ];
 
 let queryvalue = {
@@ -32,8 +32,8 @@ let queryvalue = {
     country: 'PH',
     language: 'en',
     orderpreference: 'delivery',
-    latitude: '14.556484',
-    longitude: '121.023842',
+    latitude: '14.343635864303874',
+    longitude: '120.9315928175285',
     fb_iframe_origin: 'https://www.facebook.com',
 };
 
@@ -52,7 +52,7 @@ router.get('/', async function (req, res) {
         let apikey = 'pk.617c1ae9f2ec8cf298af42fe5d420466';
 
         // Get the addressinfo from the database
-        let addressInfoArray = addressinfo;
+        let addressInfoArray = addressinfo ? addressinfo : '';
 
         // Build the addressinfo html
         let addressinfohtml = '';
@@ -111,6 +111,45 @@ router.post('/search', express.json(), async function (req, res) {
             status: 'success',
             data: {
                 html: suggestionshtml,
+            },
+        });
+    } catch (e) {
+        console.log('\n mapaddresslocationcontroller.POST_search ERROR');
+        console.log(e);
+        console.log(JSON.stringify(e));
+        res.json({
+            status: 'error',
+            message: e.message,
+        });
+    }
+});
+
+router.post('/geocode', express.json(), async function (req, res) {
+    try {
+        console.log('\n mapaddresslocationcontroller.POST_search');
+
+        // Get the query object
+        // Debug for now
+        let userProfile = queryvalue;
+
+        // Get the body
+        let { queryObject, apikey, lng, lat } = req.body;
+
+        // let viewbox = `<max_lon>,<max_lat>,<min_lon>,<min_lat>`;
+
+        // Get the details
+        let info = await mapbuildermodule.ReverseGeocode({
+            apikey,
+            lng,
+            lat,
+        });
+
+        // console.log(suggestionshtml);
+
+        res.json({
+            status: 'success',
+            data: {
+                info,
             },
         });
     } catch (e) {
