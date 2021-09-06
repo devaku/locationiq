@@ -4,7 +4,7 @@
     "description": "Repository that has an working Express template",
     "main": "app.js",
     "scripts": {
-        "debug-nolint": "nodemon app.js",
+        "start": "nodemon app.js"
     },
     "author": "Alejo Kim Uy",
     "license": "ISC",

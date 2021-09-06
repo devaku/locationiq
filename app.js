@@ -1,9 +1,6 @@
-//Load Development Variables
-if (process.env.NODE_ENV === undefined) {
-    require('dotenv').config();
-}
+// Load Development Variables
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT ? process.env.PORT : '8080';
 
 // Set the ROOT DIRECTORY
 global.ROOT_DIRECTORY = __dirname;
@@ -12,7 +9,6 @@ const express = require('express');
 const morgan = require('morgan');
 
 //Logger
-const log = require('./config/log.js');
 const routes = require('./routes/index.js');
 
 const app = express();
@@ -41,5 +37,5 @@ app.set('view options', {
 
 app.set('port', PORT);
 app.listen(PORT, () => {
-    log.LogConsole(`Server is running at URL http://localhost:${PORT}`);
+    console.log(`Server is running at URL http://localhost:${PORT}`);
 });
